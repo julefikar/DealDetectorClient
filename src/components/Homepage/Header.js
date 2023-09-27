@@ -30,8 +30,9 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between; /* Distribute content evenly */
     align-items: center;
-    background-color: lightblue;
+    background-color: #BFDBF7;
     padding: 10px;
+    margin-bottom: 90px; 
 `;
 
 const Navbar = styled.div`
