@@ -20,71 +20,68 @@
               <StyledH1>Categories</StyledH1>
           </TextContainer>
             <Grid container spacing={6} direction="row" justifyContent="space-around"   alignItems="flex-end" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3}}> 
-              <IconContainer>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <BuildIcon fontSize="medium" />
+                      <BuildIcon fontSize="large" />
                       <IconLabel>Accessories</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <ComputerIcon fontSize="medium" />
+                      <ComputerIcon fontSize="large" />
                       <IconLabel>Electronics</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <PetsIcon fontSize="medium" />
+                      <PetsIcon fontSize="large" />
                       <IconLabel>Pets</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <BrushIcon fontSize="medium" />
+                      <BrushIcon fontSize="large" />
                       <IconLabel>Beauty</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <SportsEsportsIcon fontSize="medium" />
+                      <SportsEsportsIcon fontSize="large" />
                       <IconLabel>Gaming</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <SchoolIcon fontSize="medium" />
+                      <SchoolIcon fontSize="large" />
                       <IconLabel>School</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <PhotoCameraBackIcon fontSize="medium" />
+                      <PhotoCameraBackIcon fontSize="large" />
                       <IconLabel>Camera</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <HouseIcon fontSize="medium" />
+                      <HouseIcon fontSize="large" />
                       <IconLabel>Home</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <SportsBasketballIcon fontSize="medium" />
+                      <SportsBasketballIcon fontSize="large" />
                       <IconLabel>Sports</IconLabel>
                     </IconWrapper>
                 </Grid>
-
-              </IconContainer> 
           </Grid>      
       </Wrapper>
     )
@@ -108,11 +105,6 @@
       font-size: 20px;
       font-weight: 700;
     `;
-
-  const IconContainer = styled.div`
-      display: flex;
-      justify-content: space-around;
-  `;
 
   const IconWrapper = styled.div`
       display: flex;
