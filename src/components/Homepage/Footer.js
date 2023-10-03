@@ -19,72 +19,69 @@
           <TextContainer>
               <StyledH1>Categories</StyledH1>
           </TextContainer>
-            <Grid container spacing={6} direction="row" justifyContent="space-around"   alignItems="flex-end" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3}}> 
-              <IconContainer>
-                <Grid item xs={6}>
+            <Grid container spacing={6} alignItems="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3}}> 
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <BuildIcon fontSize="medium" />
+                      <BuildIcon fontSize="large" />
                       <IconLabel>Accessories</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <ComputerIcon fontSize="medium" />
+                      <ComputerIcon fontSize="large" />
                       <IconLabel>Electronics</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <PetsIcon fontSize="medium" />
+                      <PetsIcon fontSize="large" />
                       <IconLabel>Pets</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <BrushIcon fontSize="medium" />
+                      <BrushIcon fontSize="large" />
                       <IconLabel>Beauty</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <SportsEsportsIcon fontSize="medium" />
+                      <SportsEsportsIcon fontSize="large" />
                       <IconLabel>Gaming</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <SchoolIcon fontSize="medium" />
+                      <SchoolIcon fontSize="large" />
                       <IconLabel>School</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <PhotoCameraBackIcon fontSize="medium" />
+                      <PhotoCameraBackIcon fontSize="large" />
                       <IconLabel>Camera</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <HouseIcon fontSize="medium" />
+                      <HouseIcon fontSize="large" />
                       <IconLabel>Home</IconLabel>
                     </IconWrapper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <IconWrapper>
-                      <SportsBasketballIcon fontSize="medium" />
+                      <SportsBasketballIcon fontSize="large" />
                       <IconLabel>Sports</IconLabel>
                     </IconWrapper>
                 </Grid>
-
-              </IconContainer> 
           </Grid>      
       </Wrapper>
     )
@@ -92,34 +89,34 @@
 
   export default Footer;
 
+ 
+
   const Wrapper = styled.div`
-      background-color: #BFDBF7;
-      text-align: left;
-      padding: 20px;
-      margin-top:100px;
-      margin-bottom:50px;
+    background-color: #BFDBF7;
+    text-align: center;
+    padding: 20px;
+    margin-top: 100px;
+    margin-bottom: 50px;
   `;
 
   const TextContainer = styled.div`
-      margin-bottom: 20px;
+    margin-bottom: 20px;
   `;
 
   const StyledH1 = styled.h1`
-      font-size: 20px;
-      font-weight: 700;
-    `;
-
-  const IconContainer = styled.div`
-      display: flex;
-      justify-content: space-around;
+    font-size: 20px;
+    font-weight: 700;
   `;
 
   const IconWrapper = styled.div`
-      display: flex;
-      align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    height: 100%; /* Ensure the IconWrapper takes the full height of its container */
   `;
 
   const IconLabel = styled.p`
-      margin-top: 15px;
-      font-size: 18px;
+    margin-top: 10px;
+    font-size: 18px;
   `;
