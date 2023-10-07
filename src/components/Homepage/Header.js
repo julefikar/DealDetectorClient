@@ -42,6 +42,7 @@ const Wrapper = styled.div`
     background-color: #BFDBF7;
     padding: 10px;
     margin-bottom: 90px; 
+    height:70px;
 `;
 
 const LoginContainer = styled.div`
