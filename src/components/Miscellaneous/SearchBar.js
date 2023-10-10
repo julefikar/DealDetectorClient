@@ -7,19 +7,50 @@ const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f52
 const index = searchClient.initIndex('ecommerce');
 
 const SearchBar = () => {
+    
     const [query, setQuery] = useState('');
     const [hits, setHits] = useState([]);
+    const [selectedResult, setSelectedResult] = useState(-1);
+
+    useEffect(() => {
+        if (query.trim() === '') {
+            setHits([]);
+            return;
+        }
+    
+        async function fetchSuggestions() {
+            const { hits } = await index.search(query, {
+                hitsPerPage: 10, //limit 10 suggestions per query
+            });
+            setHits(hits);
+        }
+    
+        fetchSuggestions();
+    }, [query]);
 
     const handleInputChange = async (event) => {
         const userInput = event.target.value;
         setQuery(userInput);
+        setSelectedResult(-1);
+    };
 
-        if (userInput) {
-            const { hits } = await index.search(userInput);
-            setHits(hits);
-        } else {
-            setHits([]);
+    const handleKeyDown = (event) => {
+        if (event.key === 'ArrowDown' && selectedResult < hits.length - 1) {
+            setSelectedResult(selectedResult + 1);
+        } else if (event.key === 'ArrowUp' && selectedResult > 0) {
+            setSelectedResult(selectedResult - 1);
+        } else if (event.key === 'Enter' && selectedResult >= 0) {
+            // Handle selection and perform an action (e.g., navigate to a page)
+            const selectedSuggestion = hits[selectedResult];
+            setQuery(selectedSuggestion.name);
+            //console.log('Selected:', selectedSuggestion);
         }
+    };
+
+    const handleResultClick = (result) => {
+        // Handle the selection of a result
+        setSelectedResult(result);
+        setQuery(result.name); // Update the query with the selected result
     };
 
     return (
@@ -29,13 +60,14 @@ const SearchBar = () => {
                 placeholder="Search..."
                 value={query}
                 onChange={handleInputChange} 
+                onKeyDown={handleKeyDown}
             />
             <SearchButton>
                 <FiSearch />
             </SearchButton>
             <SearchSuggestions>
-                {hits.map((hit) => (
-                    <li key={hit.objectID}>{hit.name}</li>
+                {hits.map((hit, index) => (
+                    <li key={hit.objectID} className={index === selectedResult ? 'selected' : ''} onClick={() => handleResultClick(hit)}>{hit.name}</li>
                 ))}
             </SearchSuggestions>
         </SearchContainer>
@@ -86,7 +118,18 @@ const SearchSuggestions = styled.ul`
     width: 100%;
     background-color: #fff;
     border: 1px solid #ccc;
-    max-height: 150px;
-    overflow-y: auto;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+    li {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    li:hover {
+        background-color: #f1f1f1;
+    }
+
+    .selected {
+        background-color: #f1f1f1;
+    }
 `;
