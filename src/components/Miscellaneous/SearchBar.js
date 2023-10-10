@@ -4,10 +4,10 @@ import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 
 const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f5203');
-const index = searchClient.initIndex('ecommerce');
+const index = searchClient.initIndex('searchterms');
 
 const SearchBar = () => {
-    
+
     const [query, setQuery] = useState('');
     const [hits, setHits] = useState([]);
     const [selectedResult, setSelectedResult] = useState(-1);
@@ -17,14 +17,14 @@ const SearchBar = () => {
             setHits([]);
             return;
         }
-    
+
         async function fetchSuggestions() {
             const { hits } = await index.search(query, {
                 hitsPerPage: 10, //limit 10 suggestions per query
             });
             setHits(hits);
         }
-    
+
         fetchSuggestions();
     }, [query]);
 
@@ -42,7 +42,8 @@ const SearchBar = () => {
         } else if (event.key === 'Enter' && selectedResult >= 0) {
             // Handle selection and perform an action (e.g., navigate to a page)
             const selectedSuggestion = hits[selectedResult];
-            setQuery(selectedSuggestion.name);
+            setQuery(selectedSuggestion.search_term);
+            setSelectedResult(-1);
             //console.log('Selected:', selectedSuggestion);
         }
     };
@@ -50,16 +51,17 @@ const SearchBar = () => {
     const handleResultClick = (result) => {
         // Handle the selection of a result
         setSelectedResult(result);
-        setQuery(result.name); // Update the query with the selected result
+        setQuery(result.search_term); // Update the query with the selected result
+        setSelectedResult(-1);
     };
 
     return (
         <SearchContainer>
-            <SearchInput 
+            <SearchInput
                 type="text"
                 placeholder="Search..."
                 value={query}
-                onChange={handleInputChange} 
+                onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
             />
             <SearchButton>
@@ -67,7 +69,7 @@ const SearchBar = () => {
             </SearchButton>
             <SearchSuggestions>
                 {hits.map((hit, index) => (
-                    <li key={hit.objectID} className={index === selectedResult ? 'selected' : ''} onClick={() => handleResultClick(hit)}>{hit.name}</li>
+                    <li key={hit.objectID} className={index === selectedResult ? 'selected' : ''} onClick={() => handleResultClick(hit)}>{hit.search_term}</li>
                 ))}
             </SearchSuggestions>
         </SearchContainer>
