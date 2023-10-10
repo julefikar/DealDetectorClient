@@ -1,24 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Login = ({ closeModal }) => {
+    const [formData, setFormData] = useState({
+        identifier: '',  // This will handle either email or username
+        password: ''
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: formData.identifier,  // Assuming backend uses 'username' for both email & username
+                    password: formData.password
+                })
+            });
+
+            const data = await response.json();
+            if (response.status === 200) {
+                console.log(data.message);
+                // Handle successful login, like setting user session or redirecting
+            } else {
+                console.error(data.error);
+                // Handle login errors, like showing an error message to the user
+            }
+        } catch (error) {
+            console.error("Error logging in:", error);
+            // Handle other errors, like network issues
+        }
+    };
+
     return (
         <Overlay onClick={closeModal}>
             <LoginContainer onClick={e => e.stopPropagation()}>
                 <Title>Login</Title>
-                <Input type="text" placeholder="Email/Username" />
-                <Input type="password" placeholder="Password" />
+                <Input name="identifier" type="text" placeholder="Email/Username" onChange={handleInputChange} />
+                <Input name="password" type="password" placeholder="Password" onChange={handleInputChange} />
                 <CheckboxContainer>
                     <input type="checkbox" id="rememberMe" />
                     <label htmlFor="rememberMe">Remember Me</label>
                 </CheckboxContainer>
-                <Button>Sign In</Button>
+                <Button onClick={handleSubmit}>Sign In</Button>
                 <ForgotPassword>Forgot Password?</ForgotPassword>
             </LoginContainer>
         </Overlay>
     );
 }
-
 
 export default Login;
 

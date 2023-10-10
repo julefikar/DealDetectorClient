@@ -1,16 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Register = ({ closeModal }) => {
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (formData.password !== formData.confirmPassword) {
+            console.error("Passwords do not match");
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password
+                })
+            });
+
+            const data = await response.json();
+            if (response.status === 200) {
+                console.log(data.message);
+            } else {
+                console.error(data.error);
+            }
+        } catch (error) {
+            console.error("Error registering:", error);
+        }
+    };
+
     return (
         <Overlay onClick={closeModal}>
             <RegisterContainer onClick={e => e.stopPropagation()}>
                 <Title>Register</Title>
-                <Input type="text" placeholder="Create Username" />
-                <Input type="email" placeholder="Enter Email" />
-                <Input type="password" placeholder="Create Password" />
-                <Input type="password" placeholder="Confirm Password" />
-                <Button>Sign Up</Button>
+                <Input name="username" type="text" placeholder="Create Username" onChange={handleInputChange} />
+                <Input name="email" type="email" placeholder="Enter Email" onChange={handleInputChange} />
+                <Input name="password" type="password" placeholder="Create Password" onChange={handleInputChange} />
+                <Input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleInputChange} />
+                <Button onClick={handleSubmit}>Sign Up</Button>
                 <AlreadyUser>Already a User? <ClickableText>Click Here</ClickableText></AlreadyUser>
             </RegisterContainer>
         </Overlay>
@@ -83,5 +127,3 @@ const AlreadyUser = styled.div`
         margin-left: 5px;
     }
 `;
-
-
