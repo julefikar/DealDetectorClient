@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 
+import Axios from 'axios';
+
 const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f5203');
 const index = searchClient.initIndex('searchterms');
 
@@ -91,10 +93,20 @@ const SearchBar = () => {
     };
 
     //search button pressed
-    const searchInput = () => {
+    const searchInput = async () => {
         //TODO: implement search function to API
-
         if (query.trim() !== '') {
+        try{
+            const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
+                searchQuery: query, 
+            });
+
+            console.log(response.data)
+        }
+        catch (error){
+            console.log(error)
+        }
+        
             saveToSearchHistory(query);
         }
     };
