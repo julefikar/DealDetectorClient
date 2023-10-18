@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PasswordChecklist from 'react-password-checklist'
 
 const Register = ({ closeModal }) => {
     const [formData, setFormData] = useState({
@@ -54,6 +55,14 @@ const Register = ({ closeModal }) => {
                 <Input name="email" type="email" placeholder="Enter Email" onChange={handleInputChange} />
                 <Input name="password" type="password" placeholder="Create Password" onChange={handleInputChange} />
                 <Input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleInputChange} />
+
+                <PasswordChecklist
+                    rules={["minLength", "capital", "lowercase", "specialChar", "number", "match"]}
+                    minLength={10}
+                    value={formData.password}
+                    valueAgain={formData.confirmPassword}
+			    />
+
                 <Button onClick={handleSubmit}>Sign Up</Button>
                 <AlreadyUser>Already a User? <ClickableText>Click Here</ClickableText></AlreadyUser>
             </RegisterContainer>
