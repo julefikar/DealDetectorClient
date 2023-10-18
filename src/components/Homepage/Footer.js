@@ -3,6 +3,7 @@
   import React from "react"
   import styled from "styled-components"
   import Grid from '@mui/material/Grid';
+  import IconButton from '@mui/material/IconButton';
   import BuildIcon from '@mui/icons-material/Build';
   import ComputerIcon from '@mui/icons-material/Computer';
   import PetsIcon from '@mui/icons-material/Pets';
@@ -22,63 +23,81 @@
             <Grid container spacing={6} alignItems="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3}}> 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <BuildIcon fontSize="large" />
-                      <IconLabel>Accessories</IconLabel>
+                      <IconButton color="inherit">
+                        <BuildIcon fontSize="large" />
+                      </IconButton>
+                      <IconLabel>Accessosries</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <ComputerIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <ComputerIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Electronics</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <PetsIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <PetsIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Pets</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <BrushIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <BrushIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Beauty</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <SportsEsportsIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <SportsEsportsIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Gaming</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <SchoolIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <SchoolIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>School</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <PhotoCameraBackIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <PhotoCameraBackIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Camera</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <HouseIcon fontSize="large" />
+                      <IconButton color="inherit">
+                          <HouseIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Home</IconLabel>
                     </IconWrapper>
                 </Grid>
 
                 <Grid item xs={4}>
                     <IconWrapper>
-                      <SportsBasketballIcon fontSize="large" />
+                      <IconButton color="inherit">
+                         <SportsBasketballIcon fontSize="large" />
+                      </IconButton>
                       <IconLabel>Sports</IconLabel>
                     </IconWrapper>
                 </Grid>
