@@ -1,141 +1,40 @@
-  // src/components/Homepage/Footer.js
+import React from "react";
+import BuildIcon from '@mui/icons-material/Build';
+import ComputerIcon from '@mui/icons-material/Computer';
+import PetsIcon from '@mui/icons-material/Pets';
+import BrushIcon from '@mui/icons-material/Brush';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import SchoolIcon from '@mui/icons-material/School';
+import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack';
+import HouseIcon from '@mui/icons-material/House';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 
-  import React from "react"
-  import styled from "styled-components"
-  import Grid from '@mui/material/Grid';
-  import IconButton from '@mui/material/IconButton';
-  import BuildIcon from '@mui/icons-material/Build';
-  import ComputerIcon from '@mui/icons-material/Computer';
-  import PetsIcon from '@mui/icons-material/Pets';
-  import BrushIcon from '@mui/icons-material/Brush';
-  import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-  import SchoolIcon from '@mui/icons-material/School';
-  import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack';
-  import HouseIcon from '@mui/icons-material/House';
-  import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-
-  const Footer = () => {
+const Footer = () => {
     return (
-      <Wrapper>
-          <TextContainer>
-              <StyledH1>Categories</StyledH1>
-          </TextContainer>
-            <Grid container spacing={6} alignItems="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3}}> 
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                        <BuildIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Accessosries</IconLabel>
-                    </IconWrapper>
-                </Grid>
+        <div className="bg-ashGray text-center p-5 mt-12">
+            <div className="mb-6">
+                <h1 className="text-2xl font-bold text-jet">Explore Categories</h1>
+            </div>
+            <div className="flex flex-wrap justify-center items-center space-y-6 md:space-y-0 md:space-x-6">
+                <IconComponent Icon={<BuildIcon />} label="Accessories" />
+                <IconComponent Icon={<ComputerIcon />} label="Electronics" />
+                <IconComponent Icon={<PetsIcon />} label="Pets" />
+                <IconComponent Icon={<BrushIcon />} label="Beauty" />
+                <IconComponent Icon={<SportsEsportsIcon />} label="Gaming" />
+                <IconComponent Icon={<SchoolIcon />} label="School" />
+                <IconComponent Icon={<PhotoCameraBackIcon />} label="Camera" />
+                <IconComponent Icon={<HouseIcon />} label="Home" />
+                <IconComponent Icon={<SportsBasketballIcon />} label="Sports" />
+            </div>
+        </div>
+    );
+}
 
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <ComputerIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Electronics</IconLabel>
-                    </IconWrapper>
-                </Grid>
+const IconComponent = ({ Icon, label }) => (
+    <div className="flex flex-col items-center space-y-2 transform transition-transform hover:scale-110 cursor-pointer">
+        {Icon}
+        <p className="text-lg text-003D33">{label}</p>
+    </div>
+);
 
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <PetsIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Pets</IconLabel>
-                    </IconWrapper>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <BrushIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Beauty</IconLabel>
-                    </IconWrapper>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <SportsEsportsIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Gaming</IconLabel>
-                    </IconWrapper>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <SchoolIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>School</IconLabel>
-                    </IconWrapper>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <PhotoCameraBackIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Camera</IconLabel>
-                    </IconWrapper>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                          <HouseIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Home</IconLabel>
-                    </IconWrapper>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <IconWrapper>
-                      <IconButton color="inherit">
-                         <SportsBasketballIcon fontSize="large" />
-                      </IconButton>
-                      <IconLabel>Sports</IconLabel>
-                    </IconWrapper>
-                </Grid>
-          </Grid>      
-      </Wrapper>
-    )
-  }
-
-  export default Footer;
-
- 
-
-  const Wrapper = styled.div`
-    background-color: #BFDBF7;
-    text-align: center;
-    padding: 20px;
-    margin-top: 100px;
-    margin-bottom: 50px;
-  `;
-
-  const TextContainer = styled.div`
-    margin-bottom: 20px;
-  `;
-
-  const StyledH1 = styled.h1`
-    font-size: 20px;
-    font-weight: 700;
-  `;
-
-  const IconWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    height: 100%; /* Ensure the IconWrapper takes the full height of its container */
-  `;
-
-  const IconLabel = styled.p`
-    margin-top: 10px;
-    font-size: 18px;
-  `;
+export default Footer;
