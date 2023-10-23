@@ -1,87 +1,100 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 
-const Login = ({ closeModal }) => {
+const Login = () => {
+    const [formData, setFormData] = useState({
+        identifier: '', // This will handle either email or username
+        password: '',
+    });
+    const [errorMessage, setErrorMessage] = useState(''); // New state for error message
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({ ...prevState, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: formData.identifier,
+                    password: formData.password,
+                }),
+            });
+
+            const data = await response.json();
+            if (response.status === 200) {
+                console.log(data.message);
+                // TODO: Handle successful login here
+                setErrorMessage('');
+            } else {
+                console.error(data.error);
+                // Set the error message
+                setErrorMessage(data.error);
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+            setErrorMessage('An unexpected error occurred. Please try again.');
+        }
+    };
+
     return (
-        <Overlay onClick={closeModal}>
-            <LoginContainer onClick={e => e.stopPropagation()}>
-                <Title>Login</Title>
-                <Input type="text" placeholder="Email/Username" />
-                <Input type="password" placeholder="Password" />
-                <CheckboxContainer>
-                    <input type="checkbox" id="rememberMe" />
-                    <label htmlFor="rememberMe">Remember Me</label>
-                </CheckboxContainer>
-                <Button>Sign In</Button>
-                <ForgotPassword>Forgot Password?</ForgotPassword>
-            </LoginContainer>
-        </Overlay>
+        <div className='flex h-screen bg-ashGray'>
+            <div className='m-auto w-1/3 text-jet flex flex-wrap justify-center shadow-lg rounded-lg bg-azure'>
+                <h1 className='w-full text-4xl tracking-widest text-center'>
+                    Login
+                </h1>
+                {errorMessage && (
+                    <p className='w-full text-center text-red-600'>
+                        {errorMessage}
+                    </p>
+                )}
+                <form className='m-8 w-1/2' onSubmit={handleSubmit}>
+                    <div className='w-full my-6'>
+                        <input
+                            className='p-2 rounded shadow w-full'
+                            type='text'
+                            placeholder='Email/Username'
+                            name='identifier'
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className='w-full my-6'>
+                        <input
+                            className='p-2 rounded shadow w-full'
+                            type='password'
+                            placeholder='Password'
+                            name='password'
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className='flex items-center justify-between'>
+                        <label className='block text-jet text-sm font-bold'>
+                            <input
+                                className='mr-2 leading-tight'
+                                type='checkbox'
+                            />
+                            <span className='text-sm'>Remember Me</span>
+                        </label>
+                        <button
+                            className='w-1/2 p-2 rounded shadow bg-ashGray text-jet'
+                            type='submit'
+                        >
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+                <div className='w-full text-center my-6'>
+                    <span className='text-jet text-sm'>Forgot Password?</span>
+                </div>
+            </div>
+        </div>
     );
-}
-
+};
 
 export default Login;
-
-const Overlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const LoginContainer = styled.div`
-    background-color: #BFDBF7;
-    padding: 40px;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-`;
-
-const Title = styled.h1`
-    color: black;
-`;
-
-const Input = styled.input`
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-`;
-
-const CheckboxContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-
-    input[type="checkbox"] {
-        margin-right: 5px;
-    }
-`;
-
-const Button = styled.button`
-    background-color: #231FE8;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-`;
-
-const ForgotPassword = styled.p`
-    margin-top: 10px;
-    color: black;
-    cursor: pointer;
-`;
-
