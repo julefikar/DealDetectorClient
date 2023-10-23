@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 
@@ -112,118 +111,36 @@ const SearchBar = () => {
     };
 
     return (
-        <SearchContainer>
-            <SearchInput
+        <div className="relative bg-white shadow-sm rounded-full flex items-center pl-3 pr-2 w-80">  {/* Adjusted width and padding */}
+            <FiSearch className="text-gray-400" />
+            <input 
                 type="text"
                 placeholder="Search..."
                 value={query}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                className="flex-grow bg-transparent outline-none ml-2 text-sm" 
             />
-            <SearchButton onClick={() => searchInput()}>
+            <button onClick={searchInput} className="bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition">  {/* Adjusted padding */}
                 <FiSearch />
-            </SearchButton>
-            <SearchHistory>
+            </button>
+            <ul className="absolute left-0 mt-10 w-80 bg-white border border-gray-300 divide-y divide-gray-200 rounded shadow-lg z-10">  {/* Adjusted width */}
                 {searchHistory.map((search, index) => (
-                    <li key={index} onClick={() => setQuery(search)}> {String(search)} <button onClick={() => deleteSearch(index)}>X</button> </li>
+                    <li key={index} className="p-2 cursor-pointer flex justify-between" onClick={() => setQuery(search)}>
+                        {String(search)} 
+                        <button onClick={() => deleteSearch(index)} className="text-red-500 hover:text-red-600">X</button>
+                    </li>
                 ))}
-            </SearchHistory>
-            <SearchSuggestions>
+            </ul>
+            <ul className="absolute left-0 mt-10 w-80 bg-white border border-gray-300 divide-y divide-gray-200 rounded shadow-lg z-10">  {/* Adjusted width */}
                 {hits.map((hit, index) => (
-                    <li key={hit.objectID} className={index === selectedResult ? 'selected' : ''} onClick={() => handleResultClick(hit)}>{hit.search_term}</li>
+                    <li key={hit.objectID} className={`p-2 cursor-pointer ${index === selectedResult ? 'bg-gray-200' : ''}`} onClick={() => handleResultClick(hit)}>
+                        {hit.search_term}
+                    </li>
                 ))}
-            </SearchSuggestions>
-        </SearchContainer>
+            </ul>
+        </div>
     );
 };
 
 export default SearchBar;
-
-
-const SearchContainer = styled.div`
-    display: inline-block;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 50px; /* Make the container borders round */
-    padding: 8px;
-    width: 100%;
-    max-width: 600px;
-    height: 30px;
-`;
-
-const SearchInput = styled.input`
-    border: none;
-    outline: none;
-    padding: 8px;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 50px; /* Make the input borders round */
-    width: 90%;
-`;
-
-const SearchButton = styled.button`
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 8px;
-    align-items: center;
-    justify-content: center;
-`;
-
-const SearchSuggestions = styled.ul`
-    display: block;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-
-    li {
-        padding: 8px;
-        cursor: pointer;
-    }
-
-    li:hover {
-        background-color: #f1f1f1;
-    }
-
-    .selected {
-        background-color: #f1f1f1;
-    }
-`;
-
-const SearchHistory = styled.ul`
-    display: block;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-
-    li {
-        padding: 8px;
-        cursor: pointer;
-    }
-
-    li:hover {
-        background-color: #f1f1f1;
-    }
-
-    button {
-        float: right;
-        opacity: 0.5;
-        color: black;
-        border: none;
-        padding: 2px 8px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-`;
