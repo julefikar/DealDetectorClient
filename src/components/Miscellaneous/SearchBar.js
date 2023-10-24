@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
+import './SearchBar.css';
 
 import Axios from 'axios';
 
@@ -13,6 +14,9 @@ const SearchBar = () => {
     const [hits, setHits] = useState([]);
     const [selectedResult, setSelectedResult] = useState(-1);
     const [searchHistory, setSearchHistory] = useState([]);
+    const [isDropdownOpen, setDropdownOpen] = useState(false); // Track if suggestions or history are open
+    const [queryChange, setQueryChange] = useState(true); // Flag for search action
+    const dropdownRef = useRef(null);
 
     // Load search history from local storage on component mount
     useEffect(() => {
@@ -23,22 +27,42 @@ const SearchBar = () => {
     useEffect(() => {
         if (query.trim() === '') {
             setHits([]);
+            setDropdownOpen(false);
             return;
         }
 
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                // Clicked outside the search bar and dropdown
+                setDropdownOpen(false);
+            }
+        }
+
         async function fetchSuggestions() {
-            const { hits } = await index.search(query, {
-                hitsPerPage: 10, //limit 10 suggestions per query
-            });
-            setHits(hits);
+            if (queryChange) {
+                const { hits } = await index.search(query, {
+                    hitsPerPage: 10, //limit 10 suggestions per query
+                });
+                setHits(hits);
+            }
         }
 
         fetchSuggestions();
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+
     }, [query]);
 
     const handleInputChange = async (event) => {
         const userInput = event.target.value;
+
         setQuery(userInput);
+
+        setDropdownOpen(true); // Open dropdown when input changes
         setSelectedResult(-1);
     };
 
@@ -64,81 +88,119 @@ const SearchBar = () => {
     };
 
     const handleKeyDown = (event) => {
-        if (event.key === 'ArrowDown' && selectedResult < hits.length - 1) {
-            setSelectedResult(selectedResult + 1);
+        if (event.key === 'ArrowDown') {
+            event.preventDefault();
+
+            setSelectedResult((prevIndex) => Math.min(prevIndex + 1, hits.length + searchHistory.length - 1));
+
         } else if (event.key === 'ArrowUp' && selectedResult > 0) {
-            setSelectedResult(selectedResult - 1);
+            event.preventDefault();
+
+            setSelectedResult((prevIndex) => Math.max(prevIndex - 1, -1));
+
         } else if (event.key === 'Enter') {
             if (selectedResult >= 0) {
-                // Handle selection and perform an action (e.g., navigate to a page)
-                const selectedSuggestion = hits[selectedResult];
-                setQuery(selectedSuggestion.search_term);
-                setSelectedResult(-1);
-            }
-            else {
-                //TODO: implement search function to API
+                event.preventDefault();
+                setQueryChange(false);
 
-                //search result and save to history
+                if (selectedResult < searchHistory.length) {
+                    // Handle suggestion selection
+                    const selectedHistory = searchHistory[selectedResult];
+                    setQuery(selectedHistory);
+                } else {
+                    // Handle search history selection
+                    const selectedSuggestion = hits[selectedResult - searchHistory.length];
+                    setQuery(selectedSuggestion.search_term);
+                }
+
+                setSelectedResult(-1);
+
+            } else if (query.trim() !== '' && queryChange) {
+                // Only perform the search if no item is selected
+                setQueryChange(false); // Disable search action
+
                 saveToSearchHistory(query);
+
+                setDropdownOpen(false); // Close dropdown on Enter
+
+                //ADD SEARCH FUNCTION HERE
             }
+        } else {
+            setQueryChange(true);
         }
     };
 
     const handleResultClick = (result) => {
+        setQueryChange(false);
         // Handle the selection of a result
         setSelectedResult(result);
         setQuery(result.search_term); // Update the query with the selected result
         setSelectedResult(-1);
     };
 
+    const handleClearButtonClick = () => {
+        setQuery(''); // Clear the search input
+    };
+
     //search button pressed
     const searchInput = async () => {
         //TODO: implement search function to API
         if (query.trim() !== '') {
-        try{
-            const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
-                searchQuery: query, 
-            });
+            try {
+                const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
+                    searchQuery: query,
+                });
 
-            console.log(response.data)
-        }
-        catch (error){
-            console.log(error)
-        }
-        
+                console.log(response.data)
+            }
+            catch (error) {
+                console.log(error)
+            }
+
             saveToSearchHistory(query);
         }
     };
 
     return (
-        <div className="relative bg-white shadow-sm rounded-full flex items-center pl-3 pr-2 w-80">  {/* Adjusted width and padding */}
-            <FiSearch className="text-gray-400" />
-            <input 
+        <div className="SearchContainer" ref={dropdownRef}>
+            <input
+                onFocus={() => setDropdownOpen(true)}
                 type="text"
                 placeholder="Search..."
                 value={query}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                className="flex-grow bg-transparent outline-none ml-2 text-sm" 
+                className="SearchInput"
             />
-            <button onClick={searchInput} className="bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition">  {/* Adjusted padding */}
+            {query && ( // Render the "Clear" button when there's text in the input
+                <button className="clear-button" onClick={handleClearButtonClick}>
+                    X
+                </button>
+            )}
+            <button onClick={searchInput} className="SearchButton">
                 <FiSearch />
             </button>
-            <ul className="absolute left-0 mt-10 w-80 bg-white border border-gray-300 divide-y divide-gray-200 rounded shadow-lg z-10">  {/* Adjusted width */}
-                {searchHistory.map((search, index) => (
-                    <li key={index} className="p-2 cursor-pointer flex justify-between" onClick={() => setQuery(search)}>
-                        {String(search)} 
-                        <button onClick={() => deleteSearch(index)} className="text-red-500 hover:text-red-600">X</button>
+            {isDropdownOpen && (
+                <ul className="SearchHistory"> {searchHistory.map((search, index) => (
+                    <li key={index} className={`HistoryList ${index === selectedResult ? 'selected' : ''}`}
+                        onClick={() => setQuery(search)}> {String(search)}
+                        <button onClick={(e) => {
+                            e.stopPropagation(); //ensures that the click event from the li above is stopped at this button
+                            deleteSearch(index);
+                        }}>X</button>
                     </li>
                 ))}
-            </ul>
-            <ul className="absolute left-0 mt-10 w-80 bg-white border border-gray-300 divide-y divide-gray-200 rounded shadow-lg z-10">  {/* Adjusted width */}
-                {hits.map((hit, index) => (
-                    <li key={hit.objectID} className={`p-2 cursor-pointer ${index === selectedResult ? 'bg-gray-200' : ''}`} onClick={() => handleResultClick(hit)}>
-                        {hit.search_term}
-                    </li>
-                ))}
-            </ul>
+                </ul>
+            )}
+            {isDropdownOpen && (
+                <ul className="SearchSuggestions">
+                    {hits.map((hit, index) => (
+                        <li key={hit.objectID} className={index === selectedResult - searchHistory.length ? 'selected' : ''} onClick={() => handleResultClick(hit)}>
+                            {hit.search_term}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
