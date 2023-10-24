@@ -1,0 +1,103 @@
+.SearchContainer {
+    position: relative;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 50px; /* Make the container borders round */
+    box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+    padding: 8px;
+    width: auto;
+    min-width: 450px;
+    max-height: 50px;
+    margin: 25px auto;
+}
+
+.SearchInput {
+    position: relative;
+    border: none;
+    padding: 2px;
+    text-align: center;
+    vertical-align: middle;
+    width: 90%;
+}
+
+.SearchInput:focus {
+    outline: none;
+}
+
+.SearchButton {
+    position: absolute;
+    right: -22px;
+    top: -3px;
+    height: 50px;
+    width: 55px;
+    text-align: center;
+    line-height: 55px;
+    font-size: 20px;
+    color: #644bff;
+    cursor: pointer;
+}
+
+.SearchSuggestions {
+    display: block;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    right: -9px;
+    position: relative;
+    width: 90%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.SearchSuggestions li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.SearchSuggestions li:hover {
+    background-color: #f1f1f1;
+}
+
+.SearchSuggestions li.selected {
+    background-color: #f1f1f1;
+}
+
+.SearchHistory {
+    display: block;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    right: -9px;
+    position: relative;
+    width: 90%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.HistoryList {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.HistoryList:hover {
+    background-color: #f1f1f1;
+}
+
+.HistoryList.selected {
+    background-color: #f1f1f1;
+}
+
+.HistoryList button {
+    float: right;
+    opacity: 0.5;
+    color: black;
+    border: none;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
