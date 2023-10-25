@@ -5,6 +5,7 @@ import Body from './components/Homepage/Body';
 import Footer from './components/Homepage/Footer';
 import Login from './components/Homepage/Login';
 import Register from './components/Homepage/Register';
+import Contact from './components/Homepage/Contact';
 import './index.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                     <Route path='/' element={<Body />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
+                    <Route path='/contact' element={<Contact />} />
                 </Routes>
                 <Footer />
             </div>
