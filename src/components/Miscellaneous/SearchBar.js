@@ -27,6 +27,7 @@ const SearchBar = () => {
     useEffect(() => {
         if (query.trim() === '') {
             setHits([]);
+            document.addEventListener('mousedown', handleClickOutside);
             setDropdownOpen(false);
             return;
         }
@@ -36,6 +37,8 @@ const SearchBar = () => {
                 // Clicked outside the search bar and dropdown
                 setDropdownOpen(false);
             }
+
+            console.log("clicked out");
         }
 
         async function fetchSuggestions() {
@@ -56,6 +59,11 @@ const SearchBar = () => {
         };
 
     }, [query]);
+
+    const closeDropdown = () => {
+        if (query.trim() === '')
+            setDropdownOpen(false);
+    }
 
     const handleInputChange = async (event) => {
         const userInput = event.target.value;
@@ -91,7 +99,7 @@ const SearchBar = () => {
         if (event.key === 'ArrowDown') {
             event.preventDefault();
 
-            setSelectedResult((prevIndex) => Math.min(prevIndex + 1, hits.length + searchHistory.length - 1));
+            setSelectedResult((prevIndex) => Math.min(prevIndex + 1, hits.length + relevantSearchHistory.length - 1));
 
         } else if (event.key === 'ArrowUp' && selectedResult > 0) {
             event.preventDefault();
@@ -103,13 +111,13 @@ const SearchBar = () => {
                 event.preventDefault();
                 setQueryChange(false);
 
-                if (selectedResult < searchHistory.length) {
+                if (selectedResult < relevantSearchHistory.length) {
                     // Handle suggestion selection
-                    const selectedHistory = searchHistory[selectedResult];
+                    const selectedHistory = relevantSearchHistory[selectedResult];
                     setQuery(selectedHistory);
                 } else {
                     // Handle search history selection
-                    const selectedSuggestion = hits[selectedResult - searchHistory.length];
+                    const selectedSuggestion = hits[selectedResult - relevantSearchHistory.length];
                     setQuery(selectedSuggestion.search_term);
                 }
 
@@ -129,6 +137,11 @@ const SearchBar = () => {
             setQueryChange(true);
         }
     };
+
+    // Filter the relevant search history based on the current query
+    const relevantSearchHistory = searchHistory.filter((search) =>
+        search.toLowerCase().includes(query.toLowerCase())
+    );
 
     const handleResultClick = (result) => {
         setQueryChange(false);
@@ -165,6 +178,7 @@ const SearchBar = () => {
         <div className="SearchContainer" ref={dropdownRef}>
             <input
                 onFocus={() => setDropdownOpen(true)}
+                //onBlur={closeDropdown}
                 type="text"
                 placeholder="Search..."
                 value={query}
@@ -181,7 +195,7 @@ const SearchBar = () => {
                 <FiSearch />
             </button>
             {isDropdownOpen && (
-                <ul className="SearchHistory"> {searchHistory.map((search, index) => (
+                <ul className="SearchHistory"> {relevantSearchHistory.map((search, index) => (
                     <li key={index} className={`HistoryList ${index === selectedResult ? 'selected' : ''}`}
                         onClick={() => setQuery(search)}> {String(search)}
                         <button onClick={(e) => {
@@ -195,7 +209,7 @@ const SearchBar = () => {
             {isDropdownOpen && (
                 <ul className="SearchSuggestions">
                     {hits.map((hit, index) => (
-                        <li key={hit.objectID} className={index === selectedResult - searchHistory.length ? 'selected' : ''} onClick={() => handleResultClick(hit)}>
+                        <li key={hit.objectID} className={index === selectedResult - relevantSearchHistory.length ? 'selected' : ''} onClick={() => handleResultClick(hit)}>
                             {hit.search_term}
                         </li>
                     ))}

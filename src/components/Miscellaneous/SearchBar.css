@@ -50,10 +50,11 @@
     border: 1px solid #ccc;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
+    z-index: 1;
 }
 
 .SearchSuggestions li {
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
 }
 
@@ -77,6 +78,7 @@
     border: 1px solid #ccc;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
+    z-index: 1;
 }
 
 .HistoryList {
