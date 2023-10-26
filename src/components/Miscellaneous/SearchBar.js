@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
-import axios from 'axios';
 import './SearchBar.css';
-
 import Axios from 'axios';
 
 const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f5203');
