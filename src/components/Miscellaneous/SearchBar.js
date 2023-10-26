@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import './SearchBar.css';
-
 import Axios from 'axios';
 
 const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f5203');
 const index = searchClient.initIndex('searchterms');
+const API_URL = 'http://127.0.0.1:5000/get_price_data';
 
 const SearchBar = () => {
 
@@ -60,11 +60,6 @@ const SearchBar = () => {
 
     }, [query]);
 
-    const closeDropdown = () => {
-        if (query.trim() === '')
-            setDropdownOpen(false);
-    }
-
     const handleInputChange = async (event) => {
         const userInput = event.target.value;
 
@@ -93,6 +88,27 @@ const SearchBar = () => {
 
         //save history
         localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+    };
+
+    const searchWithAPI = async (query) => {
+        try {
+            const response = await Axios.post(API_URL, {
+                searchQuery: query,
+            });
+
+            console.log(response.data)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    };
+
+    //search button pressed
+    const searchInput = async () => {
+        //TODO: implement search function to API
+        if (query.trim() !== '') {
+            searchWithAPI(query);
+        }
     };
 
     const handleKeyDown = (event) => {
@@ -132,6 +148,7 @@ const SearchBar = () => {
                 setDropdownOpen(false); // Close dropdown on Enter
 
                 //ADD SEARCH FUNCTION HERE
+                searchWithAPI(query);
             }
         } else {
             setQueryChange(true);
@@ -155,30 +172,10 @@ const SearchBar = () => {
         setQuery(''); // Clear the search input
     };
 
-    //search button pressed
-    const searchInput = async () => {
-        //TODO: implement search function to API
-        if (query.trim() !== '') {
-            try {
-                const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
-                    searchQuery: query,
-                });
-
-                console.log(response.data)
-            }
-            catch (error) {
-                console.log(error)
-            }
-
-            saveToSearchHistory(query);
-        }
-    };
-
     return (
         <div className="SearchContainer" ref={dropdownRef}>
             <input
                 onFocus={() => setDropdownOpen(true)}
-                //onBlur={closeDropdown}
                 type="text"
                 placeholder="Search..."
                 value={query}
