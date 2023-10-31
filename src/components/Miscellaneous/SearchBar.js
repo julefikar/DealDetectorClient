@@ -6,7 +6,6 @@ import Axios from 'axios';
 
 const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f5203');
 const index = searchClient.initIndex('searchterms');
-const API_URL = 'http://127.0.0.1:5000/get_price_data';
 
 const SearchBar = () => {
 
@@ -92,7 +91,7 @@ const SearchBar = () => {
 
     const searchWithAPI = async (query) => {
         try {
-            const response = await Axios.post(API_URL, {
+            const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
                 searchQuery: query,
             });
 
