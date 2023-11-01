@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../Authorization/AuthContext';
 
 const Login = () => {
+    const { setIsLoggedIn } = useContext(AuthContext);
+
     const [formData, setFormData] = useState({
         identifier: '', // This will handle either email or username
         password: '',
@@ -31,6 +34,7 @@ const Login = () => {
             if (response.status === 200) {
                 console.log(data.message);
                 // TODO: Handle successful login here
+                setIsLoggedIn(true);
                 setErrorMessage('');
             } else {
                 console.error(data.error);
