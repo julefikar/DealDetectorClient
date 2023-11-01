@@ -88,11 +88,10 @@ const Register = () => {
                             'minLength',
                             'capital',
                             'lowercase',
-                            'specialChar',
                             'number',
                             'match',
                         ]}
-                        minLength={10}
+                        minLength={6}
                         value={formData.password}
                         valueAgain={formData.confirmPassword}
                         className='mb-4'
