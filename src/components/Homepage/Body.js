@@ -6,7 +6,7 @@ import HomepageImage from '../../images/homepage_image.png';
 
 const Body = () => {
     return (
-        <div className='flex flex-col lg:flex-row p-10 text-center bg-ashGray items-center justify-around'>
+        <div className='flex flex-col lg:flex-row p-10 text-center bg-[#BFDBF7] items-center justify-around'>
             <div className='flex-1 mb-8 lg:mb-0 lg:mr-10'>
                 <h1 className='text-3xl font-bold text-jet mb-5'>
                     Discover the best deals and prices with DealDetector!

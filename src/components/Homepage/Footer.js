@@ -11,7 +11,7 @@ import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 
 const Footer = () => {
     return (
-        <div className="bg-ashGray text-center p-5 mt-12">
+        <div className="bg-[#BFDBF7] text-center p-5 mt-12">
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-jet">Explore Categories</h1>
             </div>

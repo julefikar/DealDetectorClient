@@ -48,7 +48,7 @@ const Register = () => {
     };
 
     return (
-        <div className='flex h-screen bg-ashGray'>
+        <div className='flex h-screen bg-[#BFDBF7]'>
             <div className='m-auto w-1/3 text-jet flex flex-wrap justify-center shadow-lg rounded-lg bg-azure'>
                 <h1 className='w-full text-4xl tracking-widest text-center mb-6'>
                     Register
