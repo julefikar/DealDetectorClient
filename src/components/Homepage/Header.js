@@ -14,7 +14,7 @@ const Header = () => {
     };
 
     return (
-        <div className='flex flex-col bg-ashGray p-3 shadow-md mb-8'>
+        <div className='flex flex-col bg-[#BFDBF7] p-3 shadow-md mb-8'>
             <div className='flex justify-between items-center mb-4'>
                 <Link
                     to='/'

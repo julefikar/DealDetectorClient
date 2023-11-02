@@ -48,7 +48,7 @@ const Login = () => {
     };
 
     return (
-        <div className='flex h-screen bg-ashGray'>
+        <div className='flex h-screen bg-[#BFDBF7]'>
             <div className='m-auto w-1/3 text-jet flex flex-wrap justify-center shadow-lg rounded-lg bg-azure'>
                 <h1 className='w-full text-4xl tracking-widest text-center'>
                     Login
@@ -86,7 +86,7 @@ const Login = () => {
                             <span className='text-sm'>Remember Me</span>
                         </label>
                         <button
-                            className='w-1/2 p-2 rounded shadow bg-ashGray text-jet'
+                            className='w-1/2 p-2 rounded shadow bg-[#BFDBF7] text-jet'
                             type='submit'
                         >
                             Sign In
