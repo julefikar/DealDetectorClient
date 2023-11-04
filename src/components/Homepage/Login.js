@@ -1,14 +1,32 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../Authorization/AuthContext';
+import { IconButton, TextField, InputAdornment } from '@mui/material';
+import { FormControlLabel, Checkbox } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import LockIcon from '@mui/icons-material/Lock';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from "react-router-dom";
+import './Login.css';
 
 const Login = () => {
     const { setIsLoggedIn } = useContext(AuthContext);
+    const [errorMessage, setErrorMessage] = useState(''); // New state for error message
+    const [showPassword, setShowPassword] = useState(false);
+    const [checked, setChecked] = useState(false); // remember me
+    const navigate = useNavigate();
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const setRemember = (event) => {
+        setChecked(event.target.checked); // remember me
+    };
 
     const [formData, setFormData] = useState({
         identifier: '', // This will handle either email or username
         password: '',
     });
-    const [errorMessage, setErrorMessage] = useState(''); // New state for error message
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -36,6 +54,12 @@ const Login = () => {
                 // TODO: Handle successful login here
                 setIsLoggedIn(true);
                 setErrorMessage('');
+
+                //redirect to front page
+
+                navigate("/");
+
+
             } else {
                 console.error(data.error);
                 // Set the error message
@@ -48,54 +72,81 @@ const Login = () => {
     };
 
     return (
-        <div className='flex h-screen bg-[#BFDBF7]'>
-            <div className='m-auto w-1/3 text-jet flex flex-wrap justify-center shadow-lg rounded-lg bg-azure'>
-                <h1 className='w-full text-4xl tracking-widest text-center'>
-                    Login
+        <div className="LoginBackground">
+            <div className="LoginContainer">
+                <h1 className="LoginText">
+                    SIGN IN
                 </h1>
-                {errorMessage && (
-                    <p className='w-full text-center text-red-600'>
-                        {errorMessage}
-                    </p>
-                )}
-                <form className='m-8 w-1/2' onSubmit={handleSubmit}>
-                    <div className='w-full my-6'>
-                        <input
-                            className='p-2 rounded shadow w-full'
+                <form className="LoginForm" onSubmit={handleSubmit}>
+                    <div className="LoginBox">
+                        <TextField
+                            className="LoginField"
                             type='text'
                             placeholder='Email/Username'
                             name='identifier'
                             onChange={handleInputChange}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <PersonIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
                     </div>
-                    <div className='w-full my-6'>
-                        <input
-                            className='p-2 rounded shadow w-full'
-                            type='password'
+                    <div className="LoginBox">
+                        <TextField
+                            className="LoginField"
+                            type={showPassword ? 'text' : 'password'}
                             placeholder='Password'
                             name='password'
                             onChange={handleInputChange}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <LockIcon />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={handleShowPassword} edge="end">
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton >
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
                     </div>
-                    <div className='flex items-center justify-between'>
-                        <label className='block text-jet text-sm font-bold'>
-                            <input
-                                className='mr-2 leading-tight'
-                                type='checkbox'
-                            />
-                            <span className='text-sm'>Remember Me</span>
-                        </label>
+                    <div className="LoginSubmit">
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={checked}
+                                    onChange={setRemember}
+                                />
+                            }
+                            label="Remember me"
+                        />
                         <button
                             className='w-1/2 p-2 rounded shadow bg-[#BFDBF7] text-jet'
                             type='submit'
                         >
                             Sign In
                         </button>
+
+                        {errorMessage && (
+                            <p className="RegError">
+                                {errorMessage}
+                            </p>
+                        )}
+
                     </div>
                 </form>
+
                 <div className='w-full text-center my-6'>
                     <span className='text-jet text-sm'>Forgot Password?</span>
                 </div>
+
             </div>
         </div>
     );

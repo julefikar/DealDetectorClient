@@ -8,6 +8,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack';
 import HouseIcon from '@mui/icons-material/House';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import './Footer.css';
 
 const Footer = () => {
     return (
@@ -15,7 +16,7 @@ const Footer = () => {
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-jet">Explore Categories</h1>
             </div>
-            <div className="flex flex-wrap justify-center items-center space-y-6 md:space-y-0 md:space-x-6">
+            <div className="IconRow">
                 <IconComponent Icon={<BuildIcon />} label="Accessories" />
                 <IconComponent Icon={<ComputerIcon />} label="Electronics" />
                 <IconComponent Icon={<PetsIcon />} label="Pets" />
@@ -31,9 +32,9 @@ const Footer = () => {
 }
 
 const IconComponent = ({ Icon, label }) => (
-    <div className="flex flex-col items-center space-y-2 transform transition-transform hover:scale-110 cursor-pointer">
+    <div className="Icons">
         {Icon}
-        <p className="text-lg text-003D33">{label}</p>
+        <p className="IconLabel">{label}</p>
     </div>
 );
 

@@ -1,0 +1,170 @@
+.Header {
+    display: flex;
+    flex-direction: column;
+    background-color: #BFDBF7;
+    padding: 0.75rem; /* 12px */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    margin-bottom: 2rem; /* 32px */
+}
+
+.Items {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    align-items: center;
+    margin-top: 1rem; /* 16px */
+}
+
+.SiteIcon {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem; /* 8px */
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+    .SiteIcon:hover {
+        color: rgb(244 114 182);
+        transform: scale(1.5);
+    }
+
+.SiteName {
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+    font-weight: 700;
+    color: rgb(0 0 55);
+}
+
+.SearchBar {
+    display: flex;
+    padding-left: 2rem; /* 32px */
+    padding-right: 2rem; /* 32px */
+    flex: 1 1 auto;
+    max-width: 700px;
+    padding-top: 0.25rem; /* 8px */
+}
+
+.LoginBar {
+    display: flex;
+    margin-left: 1rem; /* 16px */
+}
+
+.LogIn {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem; /* 8px */
+    background-color: rgb(37, 99, 235, 0.4);
+    color: rgb(255 255 255); /*text color white*/
+    padding-top: 0.5rem; /* 8px */
+    padding-bottom: 0.5rem; /* 8px */
+    padding-left: 1rem; /* 16px */
+    padding-right: 1rem; /* 16px */
+    border-radius: 0.375rem; /* 6px */
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+}
+
+    .LogIn:hover {
+        background-color: rgb(59 130 246);
+        transform: scale(1.1);
+    }
+
+.LogOut {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem; /* 8px */
+    background-color: rgb(220, 38, 38, 0.4);
+    color: rgb(255 255 255); /*text color white*/
+    padding-top: 0.5rem; /* 8px */
+    padding-bottom: 0.5rem; /* 8px */
+    padding-left: 1rem; /* 16px */
+    padding-right: 1rem; /* 16px */
+    border-radius: 0.375rem; /* 6px */
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+}
+
+    .LogOut:hover {
+        background-color: rgb(239 68 68);
+        transform: scale(1.1);
+    }
+
+.Register {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem; /* 8px */
+    background-color: rgb(22, 163, 74, 0.4);
+    color: rgb(255 255 255); /*text color white*/
+    padding-top: 0.5rem; /* 8px */
+    padding-bottom: 0.5rem; /* 8px */
+    padding-left: 1rem; /* 16px */
+    padding-right: 1rem; /* 16px */
+    border-radius: 0.375rem; /* 6px */
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+}
+
+    .Register:hover {
+        background-color: rgb(34 197 94);
+        transform: scale(1.1);
+    }
+
+label {
+    display: none;
+    margin: 0 40px 0 0;
+    font-size: 26px;
+    line-height: 70px;
+    width: 26px;
+    float: right;
+}
+
+    label:hover {
+        transform: scale(1.2);
+    }
+
+#toggle {
+    display:none;
+}
+
+
+/*small screen*/
+@media only screen and (max-width: 1200px) {
+    .SiteName {
+        display: none;
+    }
+}
+
+/*smaller screen*/
+@media only screen and (max-width: 900px) {
+    label {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .LoginBar {
+        clear: right;
+        display: none;
+    }
+
+        .LoginBar a {
+            display: block;
+            border-bottom: 1px solid #EAEAEB;
+            margin: 0;
+        }
+
+    #toggle:checked + .LoginBar {
+        display: flex;
+    }
+}
+
+/*tiny screen*/
+@media only screen and (max-width: 600px) {
+    .SearchBar {
+        flex-grow: 0;
+        padding-top: 0.25rem; /* 8px */
+    }
+}
