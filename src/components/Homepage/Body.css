@@ -67,7 +67,7 @@
 
 
 /*small screen*/
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1200px) {
     .Image {
         width: 100%;
     }
@@ -88,7 +88,7 @@
 }
 
 /*smaller screen*/
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
     .Body {
         flex-direction: column;
     }
@@ -96,5 +96,9 @@
     .FrontAd {
         margin-bottom: 2rem; /* 32px */
         margin-right: 0;
+    }
+
+    .IconStyle:hover {
+        transform: scale(1.0);
     }
 }
