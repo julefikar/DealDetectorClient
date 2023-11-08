@@ -8,6 +8,31 @@ import { Troubleshoot } from '@mui/icons-material';
 
 
 const Body = () => {
+    const distanceAlongRef = 450;
+    const distanceAwayFromRef = 60;
+
+    const stores = [
+        { id: 'unread', defaultQueryParams: { read: false } },
+        { id: 'read', defaultQueryParams: { read: true } },
+    ];
+
+    const tabs = [
+        { storeId: 'unread', label: 'Latest' },
+        { storeId: 'read', label: 'Archive' },
+    ];
+
+    const theme = {
+        icon: { borderColor: '#100F0F', width: '35px' },
+        header: {
+            fontFamily: 'sans-serif',
+            fontSize: '20px',
+            backgroundColor: '#BFDBF7',
+            textColor: 'black',
+            borderRadius: '2px',
+        },
+        footer: { backgroundColor: '#BFDBF7' },
+    };
+
     return (
         <div className="Body">
             <div className="FrontAd">
@@ -26,79 +51,54 @@ const Body = () => {
                 />
             </div>
 
-
             <div className="IconList">
                 <div className="IconStyle">
-                    <NotificationsIcon fontSize='large' className='text-jet' />
-                    <p className="IconDescription">Notifications</p>
-            <div className='flex-1 flex flex-col md:flex-row justify-around items-center space-y-8 md:space-y-0 md:space-x-8'>
-                <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
+                    <div className='flex-1 flex flex-col md:flex-row justify-around items-center space-y-8 md:space-y-0 md:space-x-8'>
+                        <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
 
-                <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
-                           stores={stores}
-                           userEmail="dealdetectorbusiness@gmail.com"
-                           theme = {theme}
-                >
-                {(props) => 
-                <FloatingNotificationInbox height={250} 
-                                           tabs={tabs}
-                                           notificationPreferencesEnabled = {false}
-                                           placement="bottom-end"
-                                           popperOptions={{
+                            <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
+                                stores={stores}
+                                userEmail="dealdetectorbusiness@gmail.com"
+                                theme={theme}
+                            >
+                                {(props) =>
+                                    <FloatingNotificationInbox height={250}
+                                        tabs={tabs}
+                                        notificationPreferencesEnabled={false}
+                                        placement="bottom-end"
+                                        popperOptions={{
                                             modifiers: [
-                                              {
-                                                name: 'offset',
-                                                options: {
-                                                  offset: [distanceAlongRef, distanceAwayFromRef],
+                                                {
+                                                    name: 'offset',
+                                                    options: {
+                                                        offset: [distanceAlongRef, distanceAwayFromRef],
+                                                    },
                                                 },
-                                              },
                                             ],
-                                          }} 
-                                          {...props}
-                />
-                }
-                </MagicBell>
-           
-                <p className='mt-4 text-xl text-jet'>Notifications</p>
+                                        }}
+                                        {...props}
+                                    />
+                                }
+                            </MagicBell>
+
+                            <p className='mt-4 text-xl text-jet'>Notifications</p>
+                        </div>
+                    </div>
+
+                    <div className="IconStyle">
+                        <FavoriteIcon fontSize='large' className='text-jet' />
+                        <p className="IconDescription">Favorites</p>
+                    </div>
+                
+                    <div className="IconStyle">
+                        <CompareIcon fontSize='large' className='text-jet' />
+                        <p className="IconDescription">Compare Pricing</p>
+                    </div>
                 </div>
 
-                <div className="IconStyle">
-                    <FavoriteIcon fontSize='large' className='text-jet' />
-                    <p className="IconDescription">Favorites</p>
-                </div>
-
-                <div className="IconStyle">
-                    <CompareIcon fontSize='large' className='text-jet' />
-                    <p className="IconDescription">Compare Pricing</p>
-                </div>
             </div>
         </div>
     );
 };
-
-    const distanceAlongRef = 450;
-    const distanceAwayFromRef = 60;
-
-    const stores = [
-        { id: 'unread', defaultQueryParams: {read: false} },
-        { id: 'read', defaultQueryParams: { read: true } },
-      ];
-      
-    const tabs = [
-        { storeId: 'unread', label: 'Latest' },
-        { storeId: 'read', label: 'Archive' },
-    ];
-    
-    const theme = {
-        icon: { borderColor: '#100F0F', width: '35px'},
-        header: {
-        fontFamily: 'sans-serif',
-        fontSize: '20px',
-        backgroundColor: '#BFDBF7',
-        textColor: 'black',
-        borderRadius: '2px',
-        },
-        footer: { backgroundColor: '#BFDBF7' },
-    }
 
 export default Body;

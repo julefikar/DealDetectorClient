@@ -82,3 +82,14 @@ input:-webkit-autofill {
     .LoginSubmit button:hover {
         transform: scale(1.1);
     }
+
+.NewAccount {
+    display: flex;
+    background-color: rgb(181 205 233);
+    margin: auto;
+    justify-content: center;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-radius: 0.5rem; /* 8px */
+    border-color: rgb(0 0 0);
+    width: 100%;
+}

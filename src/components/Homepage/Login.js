@@ -33,6 +33,10 @@ const Login = () => {
         setFormData((prevState) => ({ ...prevState, [name]: value }));
     };
 
+    const createAccount = () => {
+        navigate("/register");
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -147,7 +151,12 @@ const Login = () => {
                     <span className='text-jet text-sm'>Forgot Password?</span>
                 </div>
 
+                <div className="NewAccount">
+                    <button className='w-1/3 p-2 rounded shadow bg-[#BFDBF7] text-jet  my-6' onClick={createAccount}>Create Account</button>
+                </div>
+
             </div>
+
         </div>
     );
 };
