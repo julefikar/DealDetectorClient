@@ -1,9 +1,8 @@
 import React from 'react';
-import MagicBell, { FloatingNotificationInbox, flatTheme } from '@magicbell/magicbell-react';
+import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CompareIcon from '@mui/icons-material/Compare';
 import HomepageImage from '../../images/homepage_image.png';
-import { Troubleshoot } from '@mui/icons-material';
 
 const Body = () => {
     return (
