@@ -3,6 +3,7 @@ import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CompareIcon from '@mui/icons-material/Compare';
 import HomepageImage from '../../images/homepage_image.png';
+import './Body.css';
 
 const Body = () => {
     return (
