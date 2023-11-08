@@ -28,14 +28,26 @@ const Body = () => {
                 <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
 
                 <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
-                   userEmail="dealdetectorbusiness@gmail.com"
-                   theme = {theme}
-                   defaultIsOpen 
+                           stores={stores}
+                           userEmail="dealdetectorbusiness@gmail.com"
+                           theme = {theme}
                 >
                 {(props) => 
                 <FloatingNotificationInbox height={250} 
+                                           tabs={tabs}
+                                           notificationPreferencesEnabled = {false}
                                            placement="bottom-end"
-                                           {...props}
+                                           popperOptions={{
+                                            modifiers: [
+                                              {
+                                                name: 'offset',
+                                                options: {
+                                                  offset: [distanceAlongRef, distanceAwayFromRef],
+                                                },
+                                              },
+                                            ],
+                                          }} 
+                                          {...props}
                 />
                 }
                 </MagicBell>
@@ -57,6 +69,19 @@ const Body = () => {
     );
 };
 
+    const distanceAlongRef = 450;
+    const distanceAwayFromRef = 60;
+
+    const stores = [
+        { id: 'unread', defaultQueryParams: {read: false} },
+        { id: 'read', defaultQueryParams: { read: true } },
+      ];
+      
+    const tabs = [
+        { storeId: 'unread', label: 'Latest' },
+        { storeId: 'read', label: 'Archive' },
+    ];
+    
     const theme = {
         icon: { borderColor: '#100F0F', width: '35px'},
         header: {
