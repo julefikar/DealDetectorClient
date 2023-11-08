@@ -1,8 +1,9 @@
 import React from 'react';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import MagicBell, { FloatingNotificationInbox, flatTheme } from '@magicbell/magicbell-react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CompareIcon from '@mui/icons-material/Compare';
 import HomepageImage from '../../images/homepage_image.png';
+import { Troubleshoot } from '@mui/icons-material';
 
 const Body = () => {
     return (
@@ -25,8 +26,21 @@ const Body = () => {
 
             <div className='flex-1 flex flex-col md:flex-row justify-around items-center space-y-8 md:space-y-0 md:space-x-8'>
                 <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
-                    <NotificationsIcon fontSize='large' className='text-jet' />
-                    <p className='mt-4 text-xl text-jet'>Notifications</p>
+
+                <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
+                   userEmail="dealdetectorbusiness@gmail.com"
+                   theme = {theme}
+                   defaultIsOpen 
+                >
+                {(props) => 
+                <FloatingNotificationInbox height={250} 
+                                           placement="bottom-end"
+                                           {...props}
+                />
+                }
+                </MagicBell>
+           
+                <p className='mt-4 text-xl text-jet'>Notifications</p>
                 </div>
 
                 <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
@@ -42,5 +56,17 @@ const Body = () => {
         </div>
     );
 };
+
+    const theme = {
+        icon: { borderColor: '#100F0F', width: '35px'},
+        header: {
+        fontFamily: 'sans-serif',
+        fontSize: '20px',
+        backgroundColor: '#BFDBF7',
+        textColor: 'black',
+        borderRadius: '2px',
+        },
+        footer: { backgroundColor: '#BFDBF7' },
+    }
 
 export default Body;
