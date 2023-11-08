@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import './SearchBar.css';
 import Axios from 'axios';
 
@@ -192,8 +193,8 @@ const SearchBar = () => {
             </button>
             {isDropdownOpen && (
                 <ul className="SearchHistory"> {relevantSearchHistory.map((search, index) => (
-                    <li key={index} className={`HistoryList ${index === selectedResult ? 'selected' : ''}`}
-                        onClick={() => setQuery(search)}> {String(search)}
+                    <li key={index} className={`HistoryList ${index === selectedResult ? 'selected' : ''}`} 
+                        onClick={() => setQuery(search)}> <HistoryOutlinedIcon /> {String(search)}
                         <button onClick={(e) => {
                             e.stopPropagation(); //ensures that the click event from the li above is stopped at this button
                             deleteSearch(index);

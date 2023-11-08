@@ -1,0 +1,34 @@
+.IconRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 1.5rem; /* 24px */
+}
+
+.Icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.5rem; /* 8px */
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+    .Icons:hover {
+        transform: scale(1.5);
+        cursor: pointer;
+    }
+
+.IconLabel {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+    color: #003D33;
+    display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    .IconLabel {
+        display: none;
+    }
+}

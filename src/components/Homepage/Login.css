@@ -1,0 +1,84 @@
+.LoginBackground {
+    display: flex;
+    background-color: rgb(191 219 247);
+    height: 100vh;
+}
+
+.LoginContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 41.666667%;
+    justify-content: center;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-radius: 0.5rem; /* 8px */
+    background-color: rgb(181 205 233);
+    max-width: 700px;
+}
+
+.LoginText {
+    width: 100%;
+    font-size: 2.25rem; /* 36px */
+    line-height: 2.5rem; /* 40px */
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-top: 2rem;
+    margin-left: 1rem;
+}
+
+.LoginError {
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+
+.LoginBox {
+    display: flex;
+    margin-top: 1.5rem; /* 24px */
+    margin-bottom: 1.5rem; /* 24px */
+    padding: 1px;
+    align-items: center;
+    padding-left: 2px;
+}
+
+    .LoginBox:hover {
+        border-bottom: 2px solid blue; /* Change the color on hover */
+    }
+
+.LoginField {
+    padding: 0.5rem; /* 8px */
+    border-radius: 0.25rem; /* 4px */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    width: 100%;
+}
+
+input:-webkit-autofill {
+    background-color: lightgray;
+    text-align: center;
+}
+
+.LoginForm {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem;
+    width: 70%;
+}
+
+.LoginSubmit {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+    .LoginSubmit label {
+        white-space: nowrap; /* Prevent line break */
+        margin-left: -7rem; /* Adjust spacing */
+    }
+
+    .LoginSubmit label:hover {
+        transform: scale(1);
+    }
+
+    .LoginSubmit button:hover {
+        transform: scale(1.1);
+    }
