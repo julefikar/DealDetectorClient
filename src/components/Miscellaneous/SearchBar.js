@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import LoadingScreen from '../Miscellaneous/LoadingScreen';
 import './SearchBar.css';
 import Axios from 'axios';
 
@@ -17,6 +18,7 @@ const SearchBar = () => {
     const [isDropdownOpen, setDropdownOpen] = useState(false); // Track if suggestions or history are open
     const [queryChange, setQueryChange] = useState(true); // Flag for search action
     const dropdownRef = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     // Load search history from local storage on component mount
     useEffect(() => {
@@ -92,6 +94,7 @@ const SearchBar = () => {
 
     const searchWithAPI = async (query) => {
         try {
+            setLoading(true);
             const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
                 searchQuery: query,
             });
@@ -100,6 +103,9 @@ const SearchBar = () => {
         }
         catch (error) {
             console.log(error)
+        }
+        finally{
+            setLoading(false);
         }
     };
 
@@ -174,6 +180,7 @@ const SearchBar = () => {
 
     return (
         <div className="SearchContainer" ref={dropdownRef}>
+            {loading && <LoadingScreen/>}
             <input
                 onFocus={() => setDropdownOpen(true)}
                 type="text"
