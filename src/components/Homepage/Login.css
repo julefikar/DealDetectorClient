@@ -93,3 +93,17 @@ input:-webkit-autofill {
     border-color: rgb(0 0 0);
     width: 100%;
 }
+
+/*small screen*/
+@media only screen and (max-width: 900px) {
+    .LoginContainer {
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto;
+        width: 90%;
+        justify-content: center;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        border-radius: 0rem; /* 8px */
+        background-color: rgb(181 205 233);
+    }
+}

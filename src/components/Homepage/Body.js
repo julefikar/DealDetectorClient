@@ -52,9 +52,9 @@ const Body = () => {
             </div>
 
             <div className="IconList">
-                <div className="IconStyle">
-                    <div className='flex-1 flex flex-col md:flex-row justify-around items-center space-y-8 md:space-y-0 md:space-x-8'>
-                        <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
+                <div className="IconList">
+                    <div className='IconStyle'>
+                        <div className='IconStyle'>
 
                             <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
                                 stores={stores}
