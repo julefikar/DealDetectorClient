@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
@@ -19,6 +20,7 @@ const SearchBar = () => {
     const [queryChange, setQueryChange] = useState(true); // Flag for search action
     const dropdownRef = useRef(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     // Load search history from local storage on component mount
     useEffect(() => {
@@ -98,8 +100,12 @@ const SearchBar = () => {
             const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
                 searchQuery: query,
             });
-
+            
+   
             console.log(response.data)
+            if(response.data.status === 'finished')
+                navigate('/results', {state:{searchData: JSON.stringify(response.data.results)}})
+        
         }
         catch (error) {
             console.log(error)

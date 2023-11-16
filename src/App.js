@@ -7,6 +7,7 @@ import Login from './components/Homepage/Login';
 import Register from './components/Homepage/Register';
 import { AuthProvider } from './components/Authorization/AuthContext';
 import './index.css';
+import Results from './components/ResultsPage/Results';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                         <Route path='/' element={<Body />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/register' element={<Register />} />
+                        <Route path='/results' element = {<Results/>}/>
                     </Routes>
                     <Footer />
                 </div>
