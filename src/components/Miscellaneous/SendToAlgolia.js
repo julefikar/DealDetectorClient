@@ -13,24 +13,17 @@ export async function sendSearchAnalytics() {
 
     // Extract the terms from the top search queries
     const terms = topTerms.map((entry) => entry.query);
+    const count_ = topTerms.map((entry) => entry.count);
 
     try {
         const response = await axios.post('http://127.0.0.1:5000/addPopularTerms', {
             terms: terms,
+            count: count_,
         });
-
-        const data = response.data;
-
-        console.log(data);
-
-        if (data.success) {
-            console.log('Popular terms added to Algolia:', data.objectIDs);
-        } else {
-            console.error('Failed to add popular terms:', data.error);
-        }
     } catch (error) {
-        console.error('Error adding popular terms:', error.message);
+        console.error('Error:', error.message);
     }
 
+    //implement option to clear cache
     //localStorage.removeItem('searchData');
 }
