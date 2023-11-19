@@ -3,6 +3,8 @@ import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import LoadingScreen from '../Miscellaneous/LoadingScreen';
+import { recordSearchQuery } from '../Miscellaneous/Analytics';
+import { sendSearchAnalytics } from '../Miscellaneous/SendToAlgolia';
 import './SearchBar.css';
 import Axios from 'axios';
 
@@ -98,6 +100,14 @@ const SearchBar = () => {
             const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
                 searchQuery: query,
             });
+
+            recordSearchQuery(query); //send data to algolia
+
+            try {
+                sendSearchAnalytics();
+            } catch (error) {
+                console.error('Error in sendSearchAnalytics:', error);
+            }
 
             console.log(response.data)
         }
