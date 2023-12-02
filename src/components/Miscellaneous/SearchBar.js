@@ -121,8 +121,6 @@ const SearchBar = () => {
                 console.error('Error in sendSearchAnalytics:', error);
             }
 
-            console.log(response.data)
-
         }
         catch (error) {
             console.log(error)
