@@ -97,14 +97,17 @@ const SearchBar = () => {
     const searchWithAPI = async (query) => {
         try {
             setLoading(true);
-            const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
+            const postResponse = await Axios.post('http://127.0.0.1:5000/search', {
                 searchQuery: query,
             });
+             console.log(postResponse)
+             if(postResponse.status === 200){
+                const res = await Axios.get('http://127.0.0.1:5000/results')
+
+                console.log(res)
+                navigate('/results', {state:{searchData: JSON.stringify(res)}})
             
-   
-            console.log(response.data)
-            if(response.data.status === 'finished')
-                navigate('/results', {state:{searchData: JSON.stringify(response.data.results)}})
+           }
         
         }
         catch (error) {
