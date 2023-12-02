@@ -4,6 +4,8 @@ import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import LoadingScreen from '../Miscellaneous/LoadingScreen';
+import { recordSearchQuery } from '../Miscellaneous/Analytics';
+import { sendSearchAnalytics } from '../Miscellaneous/SendToAlgolia';
 import './SearchBar.css';
 import Axios from 'axios';
 
@@ -100,6 +102,7 @@ const SearchBar = () => {
             const postResponse = await Axios.post('http://127.0.0.1:5000/search', {
                 searchQuery: query,
             });
+
              console.log(postResponse)
              if(postResponse.status === 200){
                 const res = await Axios.get('http://127.0.0.1:5000/results')
@@ -109,6 +112,17 @@ const SearchBar = () => {
             
            }
         
+
+            recordSearchQuery(query); //send data to algolia
+
+            try {
+                sendSearchAnalytics();
+            } catch (error) {
+                console.error('Error in sendSearchAnalytics:', error);
+            }
+
+            console.log(response.data)
+
         }
         catch (error) {
             console.log(error)
