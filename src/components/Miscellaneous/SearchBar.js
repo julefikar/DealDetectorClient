@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
@@ -21,6 +22,7 @@ const SearchBar = () => {
     const [queryChange, setQueryChange] = useState(true); // Flag for search action
     const dropdownRef = useRef(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     // Load search history from local storage on component mount
     useEffect(() => {
@@ -97,9 +99,19 @@ const SearchBar = () => {
     const searchWithAPI = async (query) => {
         try {
             setLoading(true);
-            const response = await Axios.post('http://127.0.0.1:5000/get_price_data', {
+            const postResponse = await Axios.post('http://127.0.0.1:5000/search', {
                 searchQuery: query,
             });
+
+             console.log(postResponse)
+             if(postResponse.status === 200){
+                const res = await Axios.get('http://127.0.0.1:5000/results')
+
+                console.log(res)
+                navigate('/results', {state:{searchData: JSON.stringify(res)}})
+            
+           }
+        
 
             recordSearchQuery(query); //send data to algolia
 
@@ -109,7 +121,6 @@ const SearchBar = () => {
                 console.error('Error in sendSearchAnalytics:', error);
             }
 
-            console.log(response.data)
         }
         catch (error) {
             console.log(error)
