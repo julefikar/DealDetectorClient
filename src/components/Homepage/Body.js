@@ -1,38 +1,12 @@
 import React from 'react';
-import MagicBell, { FloatingNotificationInbox, flatTheme } from '@magicbell/magicbell-react';
+import Tooltip from '@mui/material/Tooltip';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CompareIcon from '@mui/icons-material/Compare';
 import HomepageImage from '../../images/homepage_image.png';
 import './Body.css';
-import { Troubleshoot } from '@mui/icons-material';
-
 
 const Body = () => {
-    const distanceAlongRef = 450;
-    const distanceAwayFromRef = 60;
-
-    const stores = [
-        { id: 'unread', defaultQueryParams: { read: false } },
-        { id: 'read', defaultQueryParams: { read: true } },
-    ];
-
-    const tabs = [
-        { storeId: 'unread', label: 'Latest' },
-        { storeId: 'read', label: 'Archive' },
-    ];
-
-    const theme = {
-        icon: { borderColor: '#100F0F', width: '35px' },
-        header: {
-            fontFamily: 'sans-serif',
-            fontSize: '20px',
-            backgroundColor: '#BFDBF7',
-            textColor: 'black',
-            borderRadius: '2px',
-        },
-        footer: { backgroundColor: '#BFDBF7' },
-    };
-
     return (
         <div className="Body">
             <div className="FrontAd">
@@ -52,50 +26,30 @@ const Body = () => {
             </div>
 
             <div className="IconList">
-                <div className="IconList">
-                    <div className='IconStyle'>
-                        <div className='IconStyle'>
+                <div className="IconStyle">
+                    <div className='flex-1 flex flex-col md:flex-row justify-around items-center space-y-8 md:space-y-0 md:space-x-8'>
+                        <div className='flex flex-col items-center group hover:scale-110 transform transition-transform duration-300'>
+                            <Tooltip title="Stay up to date with the best new deals!" placement="top">
+                                <NotificationsIcon fontSize='large' className='text-jet' />
+                            </Tooltip>
+                            <p className="IconDescription">Notifications</p>
+                        </div>
 
-                            <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
-                                stores={stores}
-                                userEmail="dealdetectorbusiness@gmail.com"
-                                theme={theme}
-                            >
-                                {(props) =>
-                                    <FloatingNotificationInbox height={250}
-                                        tabs={tabs}
-                                        notificationPreferencesEnabled={false}
-                                        placement="bottom-end"
-                                        popperOptions={{
-                                            modifiers: [
-                                                {
-                                                    name: 'offset',
-                                                    options: {
-                                                        offset: [distanceAlongRef, distanceAwayFromRef],
-                                                    },
-                                                },
-                                            ],
-                                        }}
-                                        {...props}
-                                    />
-                                }
-                            </MagicBell>
-
-                            <p className='mt-4 text-xl text-jet'>Notifications</p>
+                        <div className="IconStyle">
+                            <Tooltip title="Save your favorite deals!" placement="top">
+                                <FavoriteIcon fontSize='large' className='text-jet' />
+                            </Tooltip>
+                            <p className="IconDescription">Favorites</p>
+                        </div>
+                    
+                        <div className="IconStyle">
+                            <Tooltip title="Find the best price among many options!" placement="top">
+                                <CompareIcon fontSize='large' className='text-jet' />
+                            </Tooltip>
+                            <p className="IconDescription">Compare Pricing</p>
                         </div>
                     </div>
-
-                    <div className="IconStyle">
-                        <FavoriteIcon fontSize='large' className='text-jet' />
-                        <p className="IconDescription">Favorites</p>
-                    </div>
-                
-                    <div className="IconStyle">
-                        <CompareIcon fontSize='large' className='text-jet' />
-                        <p className="IconDescription">Compare Pricing</p>
-                    </div>
                 </div>
-
             </div>
         </div>
     );
