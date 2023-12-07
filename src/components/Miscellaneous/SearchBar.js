@@ -103,11 +103,11 @@ const SearchBar = () => {
                 searchQuery: query,
             });
 
-             console.log(postResponse)
+             //console.log(postResponse)
              if(postResponse.status === 200){
                 const res = await Axios.get('http://127.0.0.1:5000/results')
 
-                console.log(res)
+               // console.log(res)
                 navigate('/results', {state:{searchData: JSON.stringify(res)}})
             
            }

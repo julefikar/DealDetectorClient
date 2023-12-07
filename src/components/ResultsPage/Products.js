@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Products = (props)=>{
+const Products = ({data})=>{
+    console.log(data)
     return(
         <div>
-            {props.data}
+            <h2>{JSON.stringify(data.data.cheapest_product)}</h2>
         </div>
     )
 }
