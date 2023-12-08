@@ -16,6 +16,7 @@ const Results = ()=>{
     }
     return(
         <div>
+            <p><b>Results:</b></p>
             <Products data={searchData}/>
         </div>
     )
