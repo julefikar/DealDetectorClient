@@ -78,7 +78,7 @@ const Products = ({ data }) => {
           </p>
           <p>
             <strong>Image:</strong>{' '}
-            <img src={JSON.stringify(data.data.cheapest_product.image_url)} alt="Product" style={{ maxWidth: '100%' }} />
+            <img src={JSON.stringify(data.data.cheapest_product.image_url).slice(1,-1)} referrerPolicy="no-referrer" style={{ maxWidth: '100%' }} />
           </p>
           <p>
             <strong>Description:</strong> {JSON.stringify(data.data.cheapest_product.description).slice(1,-1)}
