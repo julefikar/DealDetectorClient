@@ -1,46 +1,57 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
+
 const productTileStyle = {
   display: 'flex',
   border: '1px solid #ddd',
-  borderRadius: '10px',
-  padding: '10px',
-  margin: '10px',
+  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+  borderRadius: '20px',
+  padding: '20px',
+  margin: '10px 0',
   cursor: 'pointer',
-  transition: 'background-color 0.3s',
+  transition: 'transform 0.3s, box-shadow 0.3s',
 };
 
 const productInfoStyle = {
-  flex: 2,
+  flex: 3,
   padding: '10px',
-};
-
-const productActionsStyle = {
-  flex: 1,
-  textAlign: 'center',
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  cursor: 'pointer',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 };
 
-const alternativeDealsStyle = {
-  marginTop: '20px',
+const productImageStyle = {
+  maxHeight: '200px',
+  objectFit: 'cover',
+  marginBottom: '10px',
 };
 
-const alternativeDealsListStyle = {
-  listStyle: 'none',
-  padding: '0',
+const productDescriptionStyle = {
+  fontSize: '0.9rem',
+  color: '#555',
+  margin: '10px 0',
 };
 
-const alternativeDealsItemStyle = {
-  marginBottom: '5px',
+const productPriceStyle = {
+  fontSize: '1.2rem',
+  fontWeight: 'bold',
+  margin: '10px 0',
 };
 
-const starDisplay = {
+const productShippingPriceStyle = {
+  fontSize: '1rem',
+  color: '#888',
+  margin: '5px 0',
+};
+
+const starDisplayStyle = {
   display: 'flex',
   flexDirection: 'row',
+  margin: '10px 0',
+  background: '#fffae6',
+  padding: '5px 10px',
+  borderRadius: '5px',
 };
 
 const renderStars = (rating) => {
@@ -73,27 +84,39 @@ const Products = ({ data }) => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div style={productInfoStyle}>
-          <p>
+          <p style={productPriceStyle}>
             <strong>Name:</strong> {JSON.stringify(data.data.cheapest_product.name).slice(1,-1)}
           </p>
           <p>
             <strong>Image:</strong>{' '}
-            <img src={JSON.stringify(data.data.cheapest_product.image_url).slice(1,-1)} referrerPolicy="no-referrer" style={{ maxWidth: '100%' }} />
+            <img src={JSON.stringify(data.data.cheapest_product.image_url).slice(1,-1)} referrerPolicy="no-referrer" style={productImageStyle} />
           </p>
-          <p>
+          <p style={productDescriptionStyle}>
             <strong>Description:</strong> {JSON.stringify(data.data.cheapest_product.description).slice(1,-1)}
           </p>
-          <p>
+          <p style={productPriceStyle}>
             <strong>Price:</strong> ${JSON.stringify(data.data.cheapest_product.price).slice(1, -1)}
           </p>
-          <p>
+          <p style={productShippingPriceStyle}>
             <strong>Price with Shipping:</strong> ${JSON.stringify(data.data.cheapest_product.price_with_shipping).slice(1, -1)}
           </p>
-          <p style={starDisplay}>
-            {renderStars(data.data.cheapest_product.rating)} ({JSON.stringify(data.data.cheapest_product.review_count)})
-          </p>
+          <div style={starDisplayStyle}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {renderStars(data.data.cheapest_product.rating)}
+              <span style={{ color: 'gray', marginLeft: '5px' }}>
+                ({JSON.stringify(data.data.cheapest_product.review_count)})
+              </span>
+            </div>
+          </div>
         </div>
-        <div style={productActionsStyle}>
+        <div style={{
+          flex: 1,
+          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          cursor: 'pointer',
+        }}>
           <div style={{ fontSize: '20px', marginRight: '10px' }}>➔</div>
         </div>
       </div>
