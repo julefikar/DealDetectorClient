@@ -8,6 +8,7 @@ import Register from './components/Homepage/Register';
 import { AuthProvider } from './components/Authorization/AuthContext';
 import './index.css';
 import Results from './components/ResultsPage/Results';
+import FavoritesPage from './components/Favorites/FavoritesPage';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         <Route path='/login' element={<Login />} />
                         <Route path='/register' element={<Register />} />
                         <Route path='/results' element = {<Results/>}/>
+                        <Route path='/favorites' element = {<FavoritesPage/>}/>
                     </Routes>
                     <Footer />
                 </div>

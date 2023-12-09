@@ -1,7 +1,7 @@
 import React from 'react';
 import MagicBell, { FloatingNotificationInbox, flatTheme } from '@magicbell/magicbell-react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import CompareIcon from '@mui/icons-material/Compare';
+import { Link } from 'react-router-dom'
 import HomepageImage from '../../images/homepage_image.png';
 import './Body.css';
 import { Troubleshoot } from '@mui/icons-material';
@@ -86,14 +86,12 @@ const Body = () => {
                     </div>
 
                     <div className="IconStyle">
-                        <FavoriteIcon fontSize='large' className='text-jet' />
-                        <p className="IconDescription">Favorites</p>
+                        <Link to = '/favorites'>
+                            <FavoriteIcon fontSize='large' className='text-jet' />
+                            <p className="IconDescription">Favorites</p>
+                        </Link>
                     </div>
-                
-                    <div className="IconStyle">
-                        <CompareIcon fontSize='large' className='text-jet' />
-                        <p className="IconDescription">Compare Pricing</p>
-                    </div>
+
                 </div>
 
             </div>
