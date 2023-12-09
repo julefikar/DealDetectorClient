@@ -3,8 +3,10 @@ import { FaHeart } from 'react-icons/fa';
 
 const FavoritesComponent = ({onToggle})=>{
     const [isFavorite, setIsFavorite] = useState(false);
+    
     const toggleFavorite = ()=>{
         setIsFavorite(!isFavorite);
+        onToggle();
     }
 
     return (

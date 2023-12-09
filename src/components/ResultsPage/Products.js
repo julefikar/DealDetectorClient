@@ -66,10 +66,27 @@ const renderStars = (rating) => {
 
 const Products = ({ data }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
   const redirectToProduct = () => {
     window.open(data.data.cheapest_product.url, '_blank');
   };
+
+  const handlePropogation = (e)=>{
+    e.stopPropagation();
+  }
+
+  const addToFavorites = ()=>{
+    const isFavorite = favorites.some((fav)=> fav.id === data.data.cheapest_product.id);
+
+    if(isFavorite){
+        setFavorites(favorites.filter((fav) => fav.id !== data.data.cheapest_product.id))
+    }
+    else{
+        setFavorites([...favorites, data])
+    }
+    console.log(favorites)
+  }
 
   return (
     <div>
@@ -123,8 +140,8 @@ const Products = ({ data }) => {
         }}>
           <div style={{ fontSize: '40px', marginRight: '10px' }}>➔</div>
         </div>
-        <div style={{position: 'absolute', top: '10px', right:'30px'}}>
-            <FavoritesComponent/>
+        <div style={{position: 'absolute', top: '10px', right:'30px'}} onClick={handlePropogation}>
+            <FavoritesComponent onToggle = {addToFavorites}/>
          </div>
       </div>
     </div>
