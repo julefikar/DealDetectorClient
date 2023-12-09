@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiSearch } from "react-icons/fi";
 import algoliasearch from 'algoliasearch/lite';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import LoadingScreen from '../Miscellaneous/LoadingScreen';
 import { recordSearchQuery } from '../Miscellaneous/Analytics';
 import { sendSearchAnalytics } from '../Miscellaneous/SendToAlgolia';
@@ -11,11 +12,13 @@ import Axios from 'axios';
 
 const searchClient = algoliasearch('QGXKTHTJGY', '8cd7adea0720a2f9af20cd6ac20f5203');
 const index = searchClient.initIndex('searchterms');
+const analytics = searchClient.initIndex('searchAnalytics');
 
 const SearchBar = () => {
 
     const [query, setQuery] = useState('');
     const [hits, setHits] = useState([]);
+    const [trends, setTrends] = useState([]);
     const [selectedResult, setSelectedResult] = useState(-1);
     const [searchHistory, setSearchHistory] = useState([]);
     const [isDropdownOpen, setDropdownOpen] = useState(false); // Track if suggestions or history are open
@@ -33,9 +36,15 @@ const SearchBar = () => {
     useEffect(() => {
         if (query.trim() === '') {
             setHits([]);
+
+            getTrend();
+
             document.addEventListener('mousedown', handleClickOutside);
             setDropdownOpen(false);
             return;
+        }
+        else {
+            setTrends([]);
         }
 
         function handleClickOutside(event) {
@@ -74,6 +83,21 @@ const SearchBar = () => {
         setDropdownOpen(true); // Open dropdown when input changes
         setSelectedResult(-1);
     };
+
+    const getTrend = async () => {
+        try {
+            const getTrends = await analytics.search('', {
+                hitsPerPage: 5,
+                attributesToRetrieve: ['objectID', 'search_term', 'customRanking(desc(count))'], // Include other attributes you want to retrieve
+            });
+
+            //console.log('Algolia Response:', getTrends);
+
+            setTrends(getTrends.hits);
+        } catch (error) {
+            console.error('Error fetching trend', error);
+        }
+    }
 
     // Function to save searches to the search history
     const saveToSearchHistory = (search) => {
@@ -142,7 +166,7 @@ const SearchBar = () => {
         if (event.key === 'ArrowDown') {
             event.preventDefault();
 
-            setSelectedResult((prevIndex) => Math.min(prevIndex + 1, hits.length + relevantSearchHistory.length - 1));
+            setSelectedResult((prevIndex) => Math.min(prevIndex + 1, hits.length + trends.length + relevantSearchHistory.length - 1));
 
         } else if (event.key === 'ArrowUp' && selectedResult > 0) {
             event.preventDefault();
@@ -236,6 +260,15 @@ const SearchBar = () => {
                     {hits.map((hit, index) => (
                         <li key={hit.objectID} className={index === selectedResult - relevantSearchHistory.length ? 'selected' : ''} onClick={() => handleResultClick(hit)}>
                             {hit.search_term}
+                        </li>
+                    ))}
+                </ul>
+            )}
+            {isDropdownOpen && (
+                <ul className="SearchSuggestions">
+                    {Array.isArray(trends) && trends.map((result, index) => (
+                        <li key={result.objectID} className={index === selectedResult - relevantSearchHistory.length ? 'selected' : ''} onClick={() => handleResultClick(result)}>
+                            <TrendingUpIcon /> {result.search_term}
                         </li>
                     ))}
                 </ul>
