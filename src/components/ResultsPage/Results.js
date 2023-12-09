@@ -1,9 +1,10 @@
 import React from 'react'
+import Products from './Products';
 import { useLocation } from 'react-router-dom';
 
 const Results = ()=>{
     const location = useLocation()
-    const searchData = location.state ? location.state.searchData : null;
+    const searchData = location.state ? JSON.parse(location.state.searchData) : null;
 
 
     if (!searchData) {
@@ -15,7 +16,8 @@ const Results = ()=>{
     }
     return(
         <div>
-            {searchData}
+            <p><b>Results:</b></p>
+            <Products data={searchData}/>
         </div>
     )
 }
