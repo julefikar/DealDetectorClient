@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 
-const FavoritesComponent = ({onToggle})=>{
-    const [isFavorite, setIsFavorite] = useState(false);
-    
-    const toggleFavorite = ()=>{
-        setIsFavorite(!isFavorite);
+const FavoritesComponent = ({onToggle, isFavorite})=>{
+    const toggleFavorite = () => {
         onToggle();
-    }
-
+      };
+      
     return (
         <div onClick={toggleFavorite} style={{ fontSize: '35px', cursor: 'pointer' }}>
           {isFavorite ? <FaHeart color="pink" /> : <FaHeart />}

@@ -66,6 +66,7 @@ const renderStars = (rating) => {
 
 const Products = ({ data }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [favorites, setFavorites] = useState([]);
 
   const redirectToProduct = () => {
@@ -77,14 +78,15 @@ const Products = ({ data }) => {
   }
 
   const addToFavorites = ()=>{
-    const isFavorite = favorites.some((fav)=> fav.id === data.data.cheapest_product.id);
+    setIsFavorite(!isFavorite)
 
     if(isFavorite){
-        setFavorites(favorites.filter((fav) => fav.id !== data.data.cheapest_product.id))
+        setFavorites(favorites.filter((fav) => fav.id === data.data.cheapest_product.id))
     }
     else{
         setFavorites([...favorites, data])
     }
+    
     console.log(favorites)
   }
 
@@ -141,7 +143,7 @@ const Products = ({ data }) => {
           <div style={{ fontSize: '40px', marginRight: '10px' }}>➔</div>
         </div>
         <div style={{position: 'absolute', top: '10px', right:'30px'}} onClick={handlePropogation}>
-            <FavoritesComponent onToggle = {addToFavorites}/>
+            <FavoritesComponent onToggle = {addToFavorites} isFavorite = {isFavorite}/>
          </div>
       </div>
     </div>
