@@ -9,6 +9,7 @@ import { AuthProvider } from './components/Authorization/AuthContext';
 import './index.css';
 import Results from './components/ResultsPage/Results';
 import FavoritesPage from './components/Favorites/FavoritesPage';
+import ProtectedRoute from './components/Routing/ProtectedRoute';
 
 function App() {
     return (
@@ -20,8 +21,13 @@ function App() {
                         <Route path='/' element={<Body />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/register' element={<Register />} />
-                        <Route path='/results' element = {<Results/>}/>
-                        <Route path='/favorites' element = {<FavoritesPage/>}/>
+                        <Route path='/results' element={<Results />} />
+                        <Route path='/favorites' element={
+                            <ProtectedRoute>
+                                {/* Reroutes them if not logged in */}
+                                <FavoritesPage />
+                            </ProtectedRoute>
+                        } />
                     </Routes>
                     <Footer />
                 </div>
