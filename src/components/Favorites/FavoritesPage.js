@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../Authorization/AuthContext';
 
 const cardStyle = {
   border: '1px solid #282929',
@@ -35,17 +36,20 @@ const noFavoritesStyle = {
 };
 
 const FavoritesPage = () => {
-  const [favorites, setFavorites] = useState([]);
+    const { currentUser } = useContext(AuthContext);
+    const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:5000/get-favorites')
-      .then(response => response.text())
-      .then(data => {
-        const jsonData = JSON.parse(data);
-        setFavorites(jsonData);
-      })
-      .catch(error => console.error('Error fetching favorites:', error));
-  }, []);
+    useEffect(() => {
+        if (currentUser && currentUser.id) {
+            fetch(`http://localhost:5000/get-favorites/${currentUser.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setFavorites(data);
+                })
+                .catch(error => console.error('Error fetching favorites:', error));
+        }
+    }, [currentUser]); // Dependency on currentUser
+
 
   if (favorites.length === 0) {
     return <div style={noFavoritesStyle}>You have no favorite items yet.</div>;
