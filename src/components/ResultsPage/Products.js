@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 
 import FavoritesComponent from '../Favorites/FavoritesComponent';
@@ -77,18 +77,26 @@ const Products = ({ data }) => {
     e.stopPropagation();
   }
 
-  const addToFavorites = ()=>{
-    setIsFavorite(!isFavorite)
 
-    if(isFavorite){
-        setFavorites(favorites.filter((fav) => fav.id === data.data.cheapest_product.id))
+  useEffect(() => {
+    if (isFavorite) {
+      setFavorites(prevFavorites => [...prevFavorites, data]);
+    } else {
+      setFavorites(prevFavorites =>
+        prevFavorites.filter(fav => fav.data.cheapest_product.id !== data.data.cheapest_product.id)
+      );
+      localStorage.setItem('favorites', JSON.stringify({1 : favorites}));
     }
-    else{
-        setFavorites([...favorites, data])
-    }
-    
+  }, [isFavorite, data]);
+  
+
+
+  const addToFavorites = () => {
+    setIsFavorite(prevIsFavorite => !prevIsFavorite);
     console.log(favorites)
-  }
+  };
+  
+  
 
   return (
     <div>
@@ -122,7 +130,7 @@ const Products = ({ data }) => {
           </p>
           <p style={productShippingPriceStyle}>
             <strong>Price with Shipping:</strong> ${JSON.stringify(data.data.cheapest_product.price_with_shipping).slice(1, -1)}
-          </p>
+          </p> 
           <div style={starDisplayStyle}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               {renderStars(data.data.cheapest_product.rating)}
