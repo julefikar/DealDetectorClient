@@ -194,6 +194,7 @@ const SearchBar = () => {
                 setSelectedResult(-1);
 
             } else if (query.trim() !== '' && (queryChange || selectedResult === -1)) {
+                
                 // Only perform the search if no item is selected
                 setQueryChange(false); // Disable search action
 
