@@ -77,19 +77,61 @@ const Products = ({ data }) => {
     e.stopPropagation();
   }
 
-  const addToFavorites = ()=>{
-    setIsFavorite(!isFavorite)
+  let isProcessing = false;
 
-    if(isFavorite){
-        setFavorites(favorites.filter((fav) => fav.id === data.data.cheapest_product.id))
+  const addToFavorites = (e) => {
+    e.stopPropagation();
+  
+    if (isProcessing) return;
+    isProcessing = true;
+  
+    const productData = data.data.cheapest_product;
+  
+    if (isFavorite) {
+      // Currently a favorite, remove from favorites
+      fetch('http://localhost:5000/remove-favorite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Favorite removed:', data);
+        setFavorites(favorites.filter((fav) => fav.id !== productData.id));
+      })
+      .catch((error) => {
+        console.error('Error removing favorite:', error);
+      });
+    } else {
+      // Currently not a favorite, add to favorites
+      fetch('http://localhost:5000/add-favorite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Favorite added:', data);
+        setFavorites([...favorites, productData]);
+      })
+      .catch((error) => {
+        console.error('Error adding favorite:', error);
+      });
     }
-    else{
-        setFavorites([...favorites, data])
-    }
-    
-    console.log(favorites)
-  }
-
+  
+    // Toggle favorite state after handling the logic
+    setIsFavorite(!isFavorite);
+  
+    setTimeout(() => {
+      isProcessing = false;
+    }, 500); // Add a delay to prevent rapid toggling
+  };
+  
+  
   return (
     <div>
       <div
@@ -112,7 +154,7 @@ const Products = ({ data }) => {
     
           <p>
             <strong>Image:</strong>{' '}
-            <img src={JSON.stringify(data.data.cheapest_product.image_url).slice(1,-1)} referrerPolicy="no-referrer" alt='Cannot Load Image' style={productImageStyle} />
+            <img src={JSON.stringify(data.data.cheapest_product.image_url).slice(1,-1)} referrerPolicy="no-referrer" alt='Cannot retrieve image, please refer to original site to view product image.' style={productImageStyle} />
           </p>
           <p style={productDescriptionStyle}>
             <strong>Description:</strong> {JSON.stringify(data.data.cheapest_product.description).slice(1,-1)}
@@ -142,9 +184,9 @@ const Products = ({ data }) => {
         }}>
           <div style={{ fontSize: '40px', marginRight: '10px' }}>➔</div>
         </div>
-        <div style={{position: 'absolute', top: '10px', right:'30px'}} onClick={handlePropogation}>
-            <FavoritesComponent onToggle = {addToFavorites} isFavorite = {isFavorite}/>
-         </div>
+        <div style={{position: 'absolute', top: '10px', right:'30px'}} onClick={addToFavorites}>
+          <FavoritesComponent onToggle={addToFavorites} isFavorite={isFavorite} />
+        </div>
       </div>
     </div>
   );
