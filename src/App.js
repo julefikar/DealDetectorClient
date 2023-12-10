@@ -24,6 +24,7 @@ function App() {
                         <Route path='/results' element={<Results />} />
                         <Route path='/favorites' element={
                             <ProtectedRoute>
+                                {/* Reroutes them if not logged in */}
                                 <FavoritesPage />
                             </ProtectedRoute>
                         } />
