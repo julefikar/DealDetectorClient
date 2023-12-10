@@ -14,7 +14,7 @@ const Header = () => {
 
     const handleLogout = () => {
         setIsLoggedIn(false);
-
+        localStorage.removeItem('isLoggedIn');
         // refresh
         navigate(0);
     };
@@ -37,9 +37,15 @@ const Header = () => {
 
                 </Link>
 
-                <div className="SearchBar">
-                    <SearchBar />
-                </div>
+                {isLoggedIn ? (
+                    <div className="SearchBar">
+                        <SearchBar />
+                    </div>
+                ) : (
+                    <div className="LoginPrompt">
+                        <p className="LoginMessage">Log in or Register to search for the best deals!</p>
+                    </div>
+                )}
 
                 <label for="toggle">
                     {isLoggedIn ? (

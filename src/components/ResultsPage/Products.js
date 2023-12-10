@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { AuthContext } from '../Authorization/AuthContext';
 
 import FavoritesComponent from '../Favorites/FavoritesComponent';
 
@@ -65,6 +66,7 @@ const renderStars = (rating) => {
 };
 
 const Products = ({ data }) => {
+  const { currentUser } = useContext(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favorites, setFavorites] = useState([]);
@@ -81,11 +83,13 @@ const Products = ({ data }) => {
 
   const addToFavorites = (e) => {
     e.stopPropagation();
-  
     if (isProcessing) return;
     isProcessing = true;
-  
-    const productData = data.data.cheapest_product;
+
+    const productData = {
+      ...data.data.cheapest_product,
+      userId: currentUser && currentUser.id // Include the current user's ID
+    };
   
     if (isFavorite) {
       // Currently a favorite, remove from favorites

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import './Login.css';
 
 const Login = () => {
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState(''); // New state for error message
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(false); // remember me
@@ -39,7 +39,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const response = await fetch('http://localhost:5000/login', {
                 method: 'POST',
@@ -51,22 +51,18 @@ const Login = () => {
                     password: formData.password,
                 }),
             });
-
+    
             const data = await response.json();
             if (response.status === 200) {
                 console.log(data.message);
-                // TODO: Handle successful login here
                 setIsLoggedIn(true);
+                setCurrentUser({ id: formData.identifier }); // Store username
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('currentUser', formData.identifier); // Store username in local storage
                 setErrorMessage('');
-
-                //redirect to front page
-
-                navigate("/");
-
-
+                navigate("/"); // Redirect to the front page
             } else {
                 console.error(data.error);
-                // Set the error message
                 setErrorMessage(data.error);
             }
         } catch (error) {
