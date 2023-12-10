@@ -182,6 +182,9 @@ const SearchBar = () => {
                     // Handle suggestion selection
                     const selectedHistory = relevantSearchHistory[selectedResult];
                     setQuery(selectedHistory);
+                } else if (query === '') {
+                    const selectedTrend = trends[selectedResult - relevantSearchHistory.length];
+                    setQuery(selectedTrend.search_term);
                 } else {
                     // Handle search history selection
                     const selectedSuggestion = hits[selectedResult - relevantSearchHistory.length];
@@ -190,7 +193,7 @@ const SearchBar = () => {
 
                 setSelectedResult(-1);
 
-            } else if (query.trim() !== '' && queryChange) {
+            } else if (query.trim() !== '' && (queryChange || selectedResult === -1)) {
                 // Only perform the search if no item is selected
                 setQueryChange(false); // Disable search action
 
