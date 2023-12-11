@@ -1,5 +1,6 @@
 import React from 'react';
-import MagicBell, { FloatingNotificationInbox, flatTheme } from '@magicbell/magicbell-react';
+import Tooltip from '@mui/material/Tooltip';
+import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from 'react-router-dom'
 import HomepageImage from '../../images/homepage_image.png';
@@ -8,7 +9,7 @@ import { Troubleshoot } from '@mui/icons-material';
 
 
 const Body = () => {
-    const distanceAlongRef = 450;
+    const distanceAlongRef = 400;
     const distanceAwayFromRef = 60;
 
     const stores = [
@@ -55,14 +56,14 @@ const Body = () => {
                 <div className="IconList">
                     <div className='IconStyle'>
                         <div className='IconStyle'>
-
                             <MagicBell apiKey="080c96f8332b791422fced98b75aea47ce1876bb"
                                 stores={stores}
                                 userEmail="dealdetectorbusiness@gmail.com"
                                 theme={theme}
                             >
                                 {(props) =>
-                                    <FloatingNotificationInbox height={250}
+                                    <FloatingNotificationInbox 
+                                        height={250}
                                         tabs={tabs}
                                         notificationPreferencesEnabled={false}
                                         placement="bottom-end"
@@ -80,15 +81,18 @@ const Body = () => {
                                     />
                                 }
                             </MagicBell>
-
-                            <p className='mt-4 text-xl text-jet'>Notifications</p>
+                            <Tooltip title="Stay up to date with the best new deals!" placement="bottom">
+                                <p className='mt-4 text-xl text-jet'>Notifications</p>
+                            </Tooltip>
                         </div>
                     </div>
 
                     <div className="IconStyle">
                         <Link to = '/favorites'>
                             <FavoriteIcon fontSize='large' className='text-jet' />
-                            <p className="IconDescription">Favorites</p>
+                            <Tooltip title="Save your favorite deals!" placement="bottom">
+                                <p className="IconDescription">Favorites</p>
+                            </Tooltip>
                         </Link>
                     </div>
 

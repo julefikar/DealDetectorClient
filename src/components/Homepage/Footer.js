@@ -1,4 +1,6 @@
 import React from "react";
+import Tooltip from '@mui/material/Tooltip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import BuildIcon from '@mui/icons-material/Build';
 import ComputerIcon from '@mui/icons-material/Computer';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -14,8 +16,13 @@ const Footer = () => {
     return (
         <div className="bg-[#BFDBF7] text-center p-5 mt-12">
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-jet">Explore Categories</h1>
+                <h1 className="text-2xl font-bold text-jet">Explore Categories&nbsp;
+                    <Tooltip title="Our available products types are listed below!" placement="right">
+                        <InfoOutlinedIcon fontSize='small' />
+                    </Tooltip>
+                </h1>
             </div>
+
             <div className="IconRow">
                 <IconComponent Icon={<BuildIcon />} label="Accessories" />
                 <IconComponent Icon={<ComputerIcon />} label="Electronics" />
